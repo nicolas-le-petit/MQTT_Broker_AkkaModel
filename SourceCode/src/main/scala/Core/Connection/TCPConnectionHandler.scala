@@ -1,52 +1,86 @@
-package Core.Connection
-
-import Core.Session.{EventBusActor, SessionsManagerActor}
-import akka.NotUsed
-import akka.actor.{ActorLogging, ActorSystem, Props}
-import akka.stream.{Graph, Materializer, SourceShape}
-import akka.stream.scaladsl.{Flow, Sink, Source, Tcp}
-import akka.util.ByteString
-
+//package Core.Connection
+//
+//package net.jetmq.infra
+///*
+//1st file
+//purpose: open connect socket
+// */
+//
+//import PacketHandler.Packet
+//import akka.actor.Actor
+//
 //import java.net.InetSocketAddress
-
-//open a socket here
-
-object TCPConnectionManager {
-
-  private val _host = "127.0.0.1"
-  private val _port = 1883
-  private var _count = 0
-  def run(system: ActorSystem): Unit ={
-
-    val eventHandler = system.actorOf(Props[EventBusActor], name = "eventHandler")//handle Events
-    val sessionsManager = system.actorOf(Props(new SessionsManagerActor(eventHandler)), name = "sessionsManager")//manage Sessions
-
-    implicit val mat: Materializer = Materializer(system)//implementor of blueprint
-
-    println("Local host at :" + _host + ":" + _port)
-    Tcp(system).bind(_host, _port).to(Sink.foreach{
-      connection =>
-        _count += 1
-        println("New client number " + _count + ": " + connection.remoteAddress)
-        //  val mqtt = context.actorOf(Props(classOf[MqttConnectionActor], sessions), "name")
-        val handler = system.actorOf(Props(classOf[PacketHandler], sessionsManager), "PacketHandler" + _count)
-        val graph = new InjectControl(Injector)
-        val flow = Flow.fromGraph(graph)
-
-        val queue = Source.maybe[ByteString]
-          .via(connection.flow)
-          .via(flow)
-
-          .to(Sink.foreach(handler ! _))
-          .run() // in order to "keep" the queue Materialized value instead of the Sink's
-
-        /*val source = Source.maybe[ByteString]
-        val flow = connection.flow
-        val tranfer =  source
-                      .via(flow)
-                      .to(Sink.foreach(handler ! _)).run()*/
-
-//        println("tranfered the raw data")
-    }).run()
-}
-}
+//import akka.io.Tcp.Received
+//import akka.stream.{ActorMaterializer, Materializer}
+//import akka.stream.scaladsl.{Sink, Source, Tcp}
+//import akka.util.ByteString
+//import play.api.libs.json._
+//
+//import scala.concurrent.ExecutionContext.Implicits.global
+//
+//
+//class TCPConnectionHandler(remote: InetSocketAddress) extends Actor{
+//
+////  implicit val materializer = ActorMaterializer()(context.system)//deprecated
+//  //DungTT
+//  //modifying
+//  implicit val materializer = Materializer(context)
+//
+//  val connection = Tcp(context.system).outgoingConnection(remote)
+//
+//  val source = Source.maybe[ByteString]
+//
+//  source
+//    .map(x => x)
+//    .via(connection)
+//    .runWith(Sink.ignore)
+//    .onComplete(x => {
+//      print("[Warn] LogstashTcpConnection sending completed. Closing")
+//      context.stop(self)
+//    })
+//
+//  def receive = {
+//    // if receive some msg
+//    // reformat to json -> send to stream
+//    case data: PacketTrace => {
+//      implicit val fmt1 = PacketFormat
+//      implicit val fmt2 = Json.format[PacketTrace]
+//      val s: String = Json.toJson(data).toString() + "\n"
+//      onNextBuffered(ByteString(s))
+//    }
+//
+//    case data: LogstashMessage => {
+//      implicit val fmt2 = Json.format[LogstashMessage]
+//      val s: String = Json.toJson(data).toString() + "\n"
+//      onNextBuffered(ByteString(s))
+//    }
+//
+//    case Received(data) => {
+//      println("[Info] LogstashTcpConnection received " + data)
+//    }
+//    /* https://doc.akka.io/api/akka/2.5/akka/stream/actor/ActorPublisherMessage$.html */
+//    case Request(count) => {
+//      println("[Info] LogstashTcpConnection Requested: " + count + " demand is " + totalDemand)
+//      deliverBuffer()
+//    }
+//
+//    case Cancel => {
+//      println("[Info] LogstashTcpConnection was canceled")
+//      context.stop(self)
+//    }
+//  }
+//}
+//
+//case class LogstashMessage(level: String, source: String, log_class: String, message: String, cause: Option[String] = None)
+//case class PacketTrace(source: String, in: Boolean, packet: Packet)
+//object PacketFormat extends Format[Packet] {
+//
+//  def writes(p: Packet) = JsObject(Seq(
+//    "type" -> JsString(p.getClass.getSimpleName),
+//    "dup" -> JsBoolean(p.header.dup),
+//    "qos" -> JsNumber(p.header.qos),
+//    "retain" -> JsBoolean(p.header.retain)
+//  ))
+//
+//  override def reads(json: JsValue): JsResult[Packet] = ???
+//}

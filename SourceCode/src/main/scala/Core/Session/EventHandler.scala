@@ -1,5 +1,6 @@
 package Core.Session
 
+import akka.actor.TypedActor.self
 import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props, TypedActor}
 
 case class BusSubscribe(topic: String, actor: ActorRef, qos: Int = 0)
@@ -139,7 +140,8 @@ class BadSubscriptionException(msg: String) extends Throwable
 
 case class Subscriptions(topic: String, actor: ActorRef, qos: Int)
 case class Burst(subscriptions: Subscriptions, publish: BusPublish)
-object TestEvent extends App{
+object TestEvent extends App {
+  import akka.actor.Actor
   private val topicTest: String = "Hello"
   private val qosTest: Int = 1
   private val payloadTest: Any = "World"
@@ -149,7 +151,9 @@ object TestEvent extends App{
   val PubTest = BusPublish(topicTest,payloadTest)
   val UnsubTest = BusUnsubscribe(topicTest, actorTest)
   val ScriptionTest = Subscriptions(topicTest, actorTest, qosTest)
-  actorTest ! BusSubscribe("greetings", TypedActor.self)
+  actorTest ! BusSubscribe("greetings", actorTest)
+//  actorTest ! BusPublish("time", "123")
+  actorTest ! BusPublish("greetings", "hello")
 //  val burstTest = Burst(List[ScriptionTest, PubTest])
 //  actorTest ! PubTest
 //  actorTest ! ScriptionTest

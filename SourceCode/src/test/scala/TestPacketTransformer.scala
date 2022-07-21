@@ -1,304 +1,280 @@
-//package Test
-//
-//import akka.actor.{ActorSystem, Props}
-//import akka.testkit.{ImplicitSender, TestKit}
-//import Core.Connection._
-//import Core.Session._
-//import akka.actor.Status.Success
-//import akka.actor.TypedActor.self
-//import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
-//
-////import org.specs2.mutable._
-////import org.specs2.specification.Scope
-//import org.scalatest.wordspec.AnyWordSpec
-//
-//class BusSpec extends TestKit(ActorSystem("BusSpec")) with AnyWordSpec {
-//
-////  isolated
-//
-//  "MqttEventBus handler actor" should {
-//
-//    "simple pubsub" in {
-//
-//      val bus = system.actorOf(Props[EventBusActor])
-//
-//      bus ! BusSubscribe("greetings", self)
-//      bus ! BusPublish("time", "123")
-//      bus ! BusPublish("greetings", "hello")
-//
-//      expectMsg(PublishPayload("hello", false))
-//
-//      expectNoMessage(Bag.wait_time)
-////      success
-//    }
-//
-//    "4.7.1.2 Multi-level wildcard" in {
-//
-//      val bus = system.actorOf(Props[EventBusActor])
-//      bus ! BusSubscribe("sport/tennis/player1/#", self)
-//      bus ! BusPublish("sport/tennis/player1", "1")
-//      expectMsg(PublishPayload("1", false))
-//
-//      bus ! BusPublish("sport/tennis/player1/ranking", "2")
-//      expectMsg(PublishPayload("2", false))
-//
-//      bus ! BusPublish("sport/tennis/player1/score/wimbledon", "3")
-//      expectMsg(PublishPayload("3", false))
-//
-//      expectNoMessage(Bag.wait_time)
-////      success
-//    }
-//
-//
-//    "support multilevel only with a wildcard" in {
-//
-//      val bus = system.actorOf(Props[EventBusActor])
-//      bus ! BusSubscribe("sport/tennis/player2", self)
-//      bus ! BusPublish("sport/tennis/player2", "1")
-//      expectMsg(PublishPayload("1", false))
-//
-//      bus ! BusPublish("sport/tennis/player2/ranking", "2")
-//
-//      expectNoMessage(Bag.wait_time)
-////      success
-//    }
-//
-//    "square for parent level" in {
-//      //“sport/#” also matches the singular “sport”, since # includes the parent level
-//      val bus = system.actorOf(Props[EventBusActor])
-//      bus ! BusSubscribe("sport/#", self)
-//      bus ! BusPublish("sport", "1")
-//      expectMsg(PublishPayload("1", false))
-//
-//      expectNoMessage(Bag.wait_time)
-//
-//      bus ! BusSubscribe("#", self)
-//      bus ! BusPublish("sport", "2")
-//      expectMsg(PublishPayload("2", false))
-//
-//      expectNoMessage(Bag.wait_time)
-////      success
-//    }
-//
-//    "square is root" in {
-//      //“#” is valid and will receive every Application Message
-//      val bus = system.actorOf(Props[EventBusActor])
-//      bus ! BusSubscribe("#", self)
-//      bus ! BusPublish("sport", "1")
-//      expectMsg(PublishPayload("1", false))
-//
-//      bus ! BusPublish("dw", "2")
-//      expectMsg(PublishPayload("2", false))
-//
-//      bus ! BusPublish("dw/1/2/3/values", "3")
-//      expectMsg(PublishPayload("3", false))
-//
-//      expectNoMessage(Bag.wait_time)
-////      success
-//    }
-//
-//    "work for valid input" in {
-//      //“sport/tennis/#” is valid
-//
-//      val bus = system.actorOf(Props[EventBusActor])
-//      bus ! BusSubscribe("sport/tennis/#", self)
-//      bus ! BusPublish("sport/tennis/123", "1")
-//      expectMsg(PublishPayload("1", false))
-//
-//      expectNoMessage(Bag.wait_time)
-////      success
-//    }
-//
-////    "“sport/tennis#” is not valid" in {
-////      MqttTopicClassificator.checkTopicName("sport/tennis#") must throwA[BadSubscriptionException]
-////    }
-////
-////    "“sport/tennis/#/ranking”" in {
-////
-////      MqttTopicClassificator.checkTopicName("sport/tennis/#/ranking") must throwA[BadSubscriptionException]
-////    }
-//
-//    "check only one level for plus" in {
-//      //“sport/tennis/+” matches “sport/tennis/player1” and “sport/tennis/player2”, but not “sport/tennis/player1/ranking”
-//      val bus = system.actorOf(Props[EventBusActor])
-//      bus ! BusSubscribe("sport/tennis/+", self)
-//      bus ! BusPublish("sport/tennis/player1", "1")
-//      expectMsg(PublishPayload("1", false))
-//
-//      bus ! BusPublish("sport/tennis/player2", "2")
-//      expectMsg(PublishPayload("2", false))
-//
-//      bus ! BusPublish("sport/tennis/player1/ranking", "3")
-//
-//      expectNoMessage(Bag.wait_time)
-////      success
-//    }
-//
-//    "check no parent level for plus" in {
-//      //“sport/+” does not match “sport” but it does match “sport/”
-//      val bus = system.actorOf(Props[EventBusActor])
-//      bus ! BusSubscribe("sport/+", self)
-//      bus ! BusPublish("sport", "1")
-//      expectNoMessage(Bag.wait_time)
-//
-//      bus ! BusPublish("sport/", "2")
-//      expectMsg(PublishPayload("2", false))
-//
-////      success
-//    }
-//
-//    "check level for double plus" in {
-//      //“/finance” matches “+/+”
-//      val bus = system.actorOf(Props[EventBusActor])
-//      bus ! BusSubscribe("+/+", self)
-//      bus ! BusPublish("/finance", "1")
-//      expectMsg(PublishPayload("1", false))
-//
-////      success
-//    }
-//
-//    "check the same level" in {
-//      //“/finance” matches “/+”"
-//      val bus = system.actorOf(Props[EventBusActor])
-//      bus ! BusSubscribe("/+", self)
-//      bus ! BusPublish("/finance", "1")
-//      expectMsg(PublishPayload("1", false))
-//
-////      Success("ok")
-//    }
-//
-//    "chech different levels" in {
-//      //“/finance” does not match “+”
-//      val bus = system.actorOf(Props[EventBusActor])
-//      bus ! BusSubscribe("+", self)
-//      bus ! BusPublish("/finance", "1")
-//      expectNoMessage(Bag.wait_time)
-//
-////      success
-//    }
-//
-//    "check both plus and square" in {
-//      //“+/tennis/#” is valid
-//      val bus = system.actorOf(Props[EventBusActor])
-//      bus ! BusSubscribe("+/tennis/#", self)
-//      bus ! BusPublish("sport/tennis/values", "1")
-//      expectMsg(PublishPayload("1", false))
-//
-//      bus ! BusPublish("sellings/tennis/summer", "2")
-//      expectMsg(PublishPayload("2", false))
-//
-////      success
-//    }
-//
-////    "sport+” is not valid" in {
-////
-////      MqttTopicClassificator.checkTopicName("sport+") must throwA[BadSubscriptionException]
-////    }
-//
-//    "check plus in a middle" in {
-//      //“sport/+/player1” is valid
-//      val bus = system.actorOf(Props[EventBusActor])
-//      bus ! BusSubscribe("sport/+/player1", self)
-//      bus ! BusPublish("sport/tennis/player1", "1")
-//      expectMsg(PublishPayload("1", false))
-//
-//      bus ! BusPublish("sport/boxing/player1", "2")
-//      expectMsg(PublishPayload("2", false))
-//
-////      success
-//    }
-//
-//    "retain message should be stored in a topic" in {
-//      val bus = system.actorOf(Props[EventBusActor])
-//
-//      bus ! BusSubscribe("game/score", self)
-//      expectNoMsg(Bag.wait_time)
-//
-//      bus ! BusUnsubscribe("game/score", self)
-//
-//      bus ! BusPublish("game/score", "1", true)
-//
-//      bus ! BusSubscribe("game/score", self)
-//      expectMsg(PublishPayload("1", true))
-//
-//      bus ! BusPublish("game/score", "2", true)
-//      expectMsg(PublishPayload("2", false))
-//
-//      bus ! BusSubscribe("#", self)
-//      expectMsg(PublishPayload("2", true))
-//
-////      success
-//
-//    }
-//
-//    "delete retain message from topic with empty value" in {
-//      val bus = system.actorOf(Props[EventBusActor])
-//
-//      bus ! BusSubscribe("game/score", self)
-//      expectNoMessage(Bag.wait_time)
-//
-//      bus ! BusUnsubscribe("game/score", self)
-//
-//      bus ! BusPublish("game/score", "1", true)
-//
-//      bus ! BusSubscribe("game/score", self)
-//      expectMsg(PublishPayload("1", true))
-//
-//      bus ! BusPublish("game/score", "2", true)
-//      expectMsg(PublishPayload("2", false))
-//
-//      bus ! BusPublish("game/score", "3", true, true)
-//      expectMsg(PublishPayload("3", false))
-//
-//      bus ! BusUnsubscribe("game/score", self)
-//
-//      bus ! BusSubscribe("game/score", self)
-//      expectNoMessage(Bag.wait_time)
-//
-//      bus ! BusSubscribe("#", self)
-//      expectNoMessage(Bag.wait_time)
-//
-////      success
-//
-//    }
-//
-//    "complex scenario with square" in {
-//      val bus = system.actorOf(Props[EventBusActor])
-//
-//      bus ! BusSubscribe("/#", self)
-//      expectNoMessage(Bag.wait_time)
-//
-//      bus ! BusUnsubscribe("/Topic/C", self)
-//      expectNoMessage(Bag.wait_time)
-//
-//      bus ! BusPublish("TopicA/B", "1", true)
-//      expectNoMessage(Bag.wait_time)
-//
-//      bus ! BusPublish("TopicA/B", "2", false)
-//      expectNoMessage(Bag.wait_time)
-//
-//      bus ! BusPublish("Topic/C", "3", true)
-//      expectNoMessage(Bag.wait_time)
-//
-//      bus ! BusPublish("TopicA", "4", false)
-//      expectNoMessage(Bag.wait_time)
-//
-//      bus ! BusPublish("/TopicA", "5", false)
-//      expectMsg(PublishPayload("5", false))
-//
-//      bus ! BusSubscribe("Topic/C", self)
-//      expectMsg(PublishPayload("3", true))
-//
-//      bus ! BusPublish("/TopicA", "6", true)
-//      expectMsg(PublishPayload("6", false))
-//
-//      bus ! BusPublish("TopicA/C", "7", true)
-//      expectNoMessage(Bag.wait_time)
-//
-//      bus ! BusPublish("/TopicA", "8", true)
-//      expectMsg(PublishPayload("8", false))
-//
+package Test
+
+import akka.actor.{ActorSystem, Props}
+import akka.testkit.{ImplicitSender, TestKit}
+import Core.Connection._
+import Core.Session._
+import akka.actor.Status.Success
+import org.scalatest.BeforeAndAfterAll
+import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+
+//import org.specs2.mutable._
+//import org.specs2.specification.Scope
+import org.scalatest.wordspec.AnyWordSpec
+
+class BusSpec extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
+  with AnyWordSpecLike
+  with Matchers
+  with BeforeAndAfterAll  {
+
+  "EventBus actor can do:" should {
+
+    "simple pubsub - ok!" in {
+
+      val bus = system.actorOf(Props[EventBusActor])
+
+      bus ! BusSubscribe("greetings", self)
+      bus ! BusPublish("time", "123")
+      bus ! BusPublish("greetings", "hello")
+
+      expectMsg(PublishPayload("hello", false))
+
+      expectNoMessage(UserTimer.wait_time)
+    }
+
+    "SubscribeFunction: Multi level wildcard (#) - ok!" in {
+
+      val bus = system.actorOf(Props[EventBusActor])
+      bus ! BusSubscribe("parent/f1/f2/#", self)
+      bus ! BusPublish("parent/f1/f2/", "1")
+      expectMsg(PublishPayload("1", false))
+
+      bus ! BusPublish("parent/f1/f2/f3", "2")
+      expectMsg(PublishPayload("2", false))
+
+      bus ! BusPublish("parent/f1/f2/f3/f4", "3")
+      expectMsg(PublishPayload("3", false))
+
+      expectNoMessage(UserTimer.wait_time)
+    }
+
+
+    "SubscribeFunction: multilevel only with a wildcard - ok" in {
+
+      val bus = system.actorOf(Props[EventBusActor])
+      bus ! BusSubscribe("sport/tennis/player2", self)
+      bus ! BusPublish("sport/tennis/player2", "1")
+      expectMsg(PublishPayload("1", false))
+
+      bus ! BusPublish("sport/tennis/player2/ranking", "2")
+
+      expectNoMessage(UserTimer.wait_time)
+    }
+
+    "SubscribeFunction: square for parent level - ok" in {
+      //“sport/#” also matches the singular “sport”, since # includes the parent level
+      val bus = system.actorOf(Props[EventBusActor])
+      bus ! BusSubscribe("parent/#", self)
+      bus ! BusPublish("parent", "1")
+      expectMsg(PublishPayload("1", false))
+
+      expectNoMessage(UserTimer.wait_time)
+
+      bus ! BusSubscribe("#", self)
+      bus ! BusPublish("parent", "2")
+      expectMsg(PublishPayload("2", false))
+
+      expectNoMessage(UserTimer.wait_time)
+    }
+
+    "SubscribeFunction: sub all - ok" in {
+      //“#” is valid and will receive every Application Message
+      val bus = system.actorOf(Props[EventBusActor])
+      bus ! BusSubscribe("#", self)
+      bus ! BusPublish("parent", "1")
+      expectMsg(PublishPayload("1", false))
+
+      bus ! BusPublish("any", "2")
+      expectMsg(PublishPayload("2", false))
+
+      bus ! BusPublish("any/1/2/3/values", "3")
+      expectMsg(PublishPayload("3", false))
+
+      expectNoMessage(UserTimer.wait_time)
+    }
+
+    "is parent/f1/# a valid topic? - ok" in {
+      //“sport/tennis/#” is valid
+
+      val bus = system.actorOf(Props[EventBusActor])
+      bus ! BusSubscribe("sport/tennis/#", self)
+      bus ! BusPublish("sport/tennis/123", "1")
+      expectMsg(PublishPayload("1", false))
+
+      expectNoMessage(UserTimer.wait_time)
 //      success
+    }
+
+//    "“sport/tennis#” is not valid" in {
+//      MqttTopicClassificator.checkTopicName("sport/tennis#") must throwA[BadSubscriptionException]
 //    }
-//  }
-//}
+//
+//    "“sport/tennis/#/ranking”" in {
+//
+//      MqttTopicClassificator.checkTopicName("sport/tennis/#/ranking") must throwA[BadSubscriptionException]
+//    }
+
+    "SubscribeFunction: single level wildcard (+) - ok" in {
+      val bus = system.actorOf(Props[EventBusActor])
+      bus ! BusSubscribe("parent/f1/+", self)
+      bus ! BusPublish("parent/f1/f2", "1")//correct
+      expectMsg(PublishPayload("1", false))
+
+      bus ! BusPublish("parent/f1/f2", "2")//correct
+      expectMsg(PublishPayload("2", false))
+
+      bus ! BusPublish("parent/f1/f2/f3", "3")//incorrect
+      expectNoMessage(UserTimer.wait_time)
+    }
+
+    "SubscribeFunction: check no parent level for plus - ok" in {
+      val bus = system.actorOf(Props[EventBusActor])
+      bus ! BusSubscribe("parent/+", self)
+      bus ! BusPublish("parent", "1")//incorrect
+      expectNoMessage(UserTimer.wait_time)
+
+      bus ! BusPublish("parent/", "2")//correct
+      expectMsg(PublishPayload("2", false))
+    }
+
+    "SubscribeFunction: check level for double plus - ok" in {
+      //“/parent” matches “+/+”
+      val bus = system.actorOf(Props[EventBusActor])
+      bus ! BusSubscribe("+/+", self)
+      bus ! BusPublish("/parent", "1")
+      expectMsg(PublishPayload("1", false))
+    }
+
+    "SubscribeFunction: check the same level - ok" in {
+      //“/parent” matches “/+”"
+      val bus = system.actorOf(Props[EventBusActor])
+      bus ! BusSubscribe("/+", self)
+      bus ! BusPublish("/finance", "1")
+      expectMsg(PublishPayload("1", false))
+    }
+
+    "SubscribeFunction: chech different levels" in {
+      //“/parent” does not match “+”
+      val bus = system.actorOf(Props[EventBusActor])
+      bus ! BusSubscribe("+", self)
+      bus ! BusPublish("/parent", "1")
+      expectNoMessage(UserTimer.wait_time)
+    }
+
+    "SubscribeFunction: check both (+) and (#)" in {
+      //“+/tennis/#” is valid
+      val bus = system.actorOf(Props[EventBusActor])
+      bus ! BusSubscribe("+/f1/#", self)
+      bus ! BusPublish("parent/f1/f2", "1")
+      expectMsg(PublishPayload("1", false))
+
+      bus ! BusPublish("otherparent/f1/f99", "2")
+      expectMsg(PublishPayload("2", false))
+    }
+
+//    "sport+” is not valid" in {
+//
+//      MqttTopicClassificator.checkTopicName("sport+") must throwA[BadSubscriptionException]
+//    }
+
+    "SubscribeFunction: check (+) in a middle" in {
+      //“sport/+/player1” is valid
+      val bus = system.actorOf(Props[EventBusActor])
+      bus ! BusSubscribe("parent/+/f2", self)
+      bus ! BusPublish("parent/f1/f2", "1")
+      expectMsg(PublishPayload("1", false))
+
+      bus ! BusPublish("parent/f1/f2", "2")
+      expectMsg(PublishPayload("2", false))
+    }
+
+    "PubSubFuntions: check retain function - ok" in {
+      val bus = system.actorOf(Props[EventBusActor])
+      //not published yet - fail
+      bus ! BusSubscribe("game/score", self)
+      expectNoMessage(UserTimer.wait_time)
+
+      bus ! BusUnsubscribe("game/score", self)
+      //publish with retain
+      bus ! BusPublish("game/score", "1", true)
+
+      bus ! BusSubscribe("game/score", self)
+      expectMsg(PublishPayload("1", true))
+
+      bus ! BusPublish("game/score", "2", true)
+      expectMsg(PublishPayload("2", false))
+
+      bus ! BusSubscribe("#", self)
+      expectMsg(PublishPayload("2", true))//receive last value
+    }
+
+    "PubSubFuntions: check retain message + clean session - ok" in {
+      val bus = system.actorOf(Props[EventBusActor])
+
+      bus ! BusSubscribe("game/score", self)
+      expectNoMessage(UserTimer.wait_time)
+
+      bus ! BusUnsubscribe("game/score", self)
+
+      bus ! BusPublish("game/score", "1", true)
+
+      bus ! BusSubscribe("game/score", self)
+      expectMsg(PublishPayload("1", true))
+
+      bus ! BusPublish("game/score", "2", true)
+      expectMsg(PublishPayload("2", false))
+
+      bus ! BusPublish("game/score", "3", true, true)
+      expectMsg(PublishPayload("3", false))
+
+      bus ! BusUnsubscribe("game/score", self)
+
+      bus ! BusSubscribe("game/score", self)
+      expectNoMessage(UserTimer.wait_time)
+
+      bus ! BusSubscribe("#", self)
+      expectNoMessage(UserTimer.wait_time)
+
+    }
+
+    "SubFuntions: complex scenario with (#) - ok" in {
+      val bus = system.actorOf(Props[EventBusActor])
+
+      bus ! BusSubscribe("/#", self)
+      expectNoMessage(UserTimer.wait_time)
+
+      bus ! BusUnsubscribe("/Topic/C", self)
+      expectNoMessage(UserTimer.wait_time)
+
+      bus ! BusPublish("TopicA/B", "1", true)
+      expectNoMessage(UserTimer.wait_time)
+
+      bus ! BusPublish("TopicA/B", "2", false)
+      expectNoMessage(UserTimer.wait_time)
+
+      bus ! BusPublish("Topic/C", "3", true)
+      expectNoMessage(UserTimer.wait_time)
+
+      bus ! BusPublish("TopicA", "4", false)
+      expectNoMessage(UserTimer.wait_time)
+
+      bus ! BusPublish("/TopicA", "5", false)
+      expectMsg(PublishPayload("5", false))
+
+      bus ! BusSubscribe("Topic/C", self)
+      expectMsg(PublishPayload("3", true))
+
+      bus ! BusPublish("/TopicA", "6", true)
+      expectMsg(PublishPayload("6", false))
+
+      bus ! BusPublish("TopicA/C", "7", true)
+      expectNoMessage(UserTimer.wait_time)
+
+      bus ! BusPublish("/TopicA", "8", true)
+      expectMsg(PublishPayload("8", false))
+
+    }
+  }
+}
