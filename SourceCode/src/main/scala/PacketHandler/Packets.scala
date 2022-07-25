@@ -1,7 +1,6 @@
 package PacketHandler
 
 //in here we define all packets format
-//import net.sigusr.mqtt.impl.frames.RemainingLengthCodec
 
 import Supporter.RemainingLengthCodec
 import scodec.Codec
@@ -13,6 +12,11 @@ import shapeless._
 sealed trait Packet {
   def header: Header
 }
+
+case class Header(dup: Boolean, qos: Int, retain: Boolean) {
+  assert(qos >= 0 && qos <= 2, "qos can't be outside [0,1,2], was " + qos)
+}
+
 //các dạng packet
 case class Connack(header: Header, return_code: Int) extends Packet
 case class Connect(header: Header,
@@ -35,9 +39,6 @@ case class Pingreq(header: Header) extends Packet
 case class Pingresp(header: Header) extends Packet
 case class Disconnect(header: Header) extends Packet
 
-case class Header(dup: Boolean, qos: Int, retain: Boolean) {
-  assert(qos >= 0 && qos <= 2, "qos can't be outside [0,1,2], was " + qos)
-}
 
 case class ConnectFlags(username: Boolean,
                         password: Boolean,

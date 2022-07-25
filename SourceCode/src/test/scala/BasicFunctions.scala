@@ -1,38 +1,40 @@
 //package Test
 //
+//
+//import Core.Connection.PacketHandler
 //import Core.Session.{EventBusActor, SessionsManagerActor}
+//import Supporter.SupportFunction.StringHelper
 //import akka.actor.Status.Failure
 //import akka.actor.{ActorRef, ActorSystem, Props}
 //import akka.io.Tcp
-//import akka.stream.ActorMaterializer
-//import akka.stream.actor.ActorPublisher
+//import akka.stream.{ActorMaterializer, Materializer}
 //import akka.stream.scaladsl.{Sink, Source}
 //import akka.testkit.{ImplicitSender, TestKit}
 //import akka.util.ByteString
-//import net.jetmq.broker._
-//import net.jetmq.tests.Bag
 //import org.scalatest.BeforeAndAfterAll
 //import org.scalatest.matchers.should.Matchers
 //import org.scalatest.wordspec.AnyWordSpecLike
 //
+//import java.beans.EventHandler
 //
-//class BasicSpec extends TestKit(ActorSystem("BasicSpec")) with class BusSpec extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
-//  with AnyWordSpecLike
-//  with Matchers
-//  with BeforeAndAfterAll   {
+//
+//class BasicSpec extends TestKit(ActorSystem("BasicSpec")) with ImplicitSender
+//with AnyWordSpecLike
+//with Matchers
+//with BeforeAndAfterAll {
 //
 ////  sequential //state dependant
 //
 //  "Requests handler actor" should {
 //
 //    val bus = system.actorOf(Props[EventBusActor], "bus")
-//    val devices = system.actorOf(Props(new SessionsManagerActor(bus)), "devices")
-//    implicit val materializer = ActorMaterializer()(system)
+//    val session = system.actorOf(Props(new SessionsManagerActor(bus)), "devices")
+//    implicit val mat: Materializer = Materializer(system)//implementor of blueprint
 //
 //    def create_actor(name: String): ActorRef = {
-//      val h = system.actorOf(Props(new TcpConnectionActor(devices)).withMailbox("priority-dispatcher"), name)
+//      val h = system.actorOf(Props(new PacketHandler(session)), name)
 //
-//      val s = Source(ActorPublisher[ByteString](h))
+//      val s = Source([ByteString](h))
 //      s.to(Sink.actorRef(self, Tcp.Close)).run()
 //
 //      return h
@@ -46,8 +48,7 @@
 //
 //      h ! "e000".toByteString //Disconnect(Header(false,0,false))
 //      expectMsg(Tcp.Close)
-//      expectNoMsg(Bag.wait_time)
-//      success
+//      expectNoMessage(UserTimer.wait_time)
 //    }
 //
 //    "Scenario 51209" in {
@@ -58,8 +59,8 @@
 //
 //      h ! "e000".toByteString //Disconnect(Header(false,0,false))
 //      expectMsg(Tcp.Close)
-//      expectNoMsg(Bag.wait_time)
-//      success
+//      expectNoMessage(UserTimer.wait_time)
+//
 //    }
 //
 //    "Scenario 51210" in {
@@ -73,8 +74,8 @@
 //
 //      h ! "e000".toByteString //Disconnect(Header(false,0,false))
 //      expectMsg(Tcp.Close)
-//      expectNoMsg(Bag.wait_time)
-//      success
+//      expectNoMessage(UserTimer.wait_time)
+//
 //    }
 //
 //    "Scenario 51211" in {
@@ -85,8 +86,8 @@
 //
 //      h ! "e000".toByteString //Disconnect(Header(false,0,false))
 //      expectMsg(Tcp.Close)
-//      expectNoMsg(Bag.wait_time)
-//      success
+//      expectNoMessage(UserTimer.wait_time)
+//
 //    }
 //
 //    "Scenario 51212" in {
@@ -117,8 +118,8 @@
 //
 //      h ! "e000".toByteString //Disconnect(Header(false,0,false))
 //      expectMsg(Tcp.Close)
-//      expectNoMsg(Bag.wait_time)
-//      success
+//      expectNoMessage(UserTimer.wait_time)
+//
 //    }
 //
 //    "Scenario 51213" in {
@@ -129,8 +130,8 @@
 //
 //      h ! "101600044d51545404020000000a6d79636c69656e746964".toByteString //Connect(Header(false,0,false),ConnectFlags(false,false,false,0,false,true,0),myclientid,None,None,None,None)
 //      expectMsg(Tcp.Close)
-//      expectNoMsg(Bag.wait_time)
-//      success
+//      expectNoMessage(UserTimer.wait_time)
+//
 //    }
 //
 //    "Scenario 51214" in {
@@ -138,8 +139,8 @@
 //
 //      h ! "10140002686a04020000000a6d79636c69656e746964".toByteString //Broken package
 //      expectMsgType[Failure]
-//      expectNoMsg(Bag.wait_time)
-//      success
+//      expectNoMessage(UserTimer.wait_time)
+//
 //    }
 //  }
 //}
