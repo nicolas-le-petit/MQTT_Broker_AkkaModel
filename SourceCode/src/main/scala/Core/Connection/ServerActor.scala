@@ -44,9 +44,8 @@ class Server(address: String, port: Int) extends Actor {
 class TCPConnectionHandler(handler: ActorRef) extends ActorLogging with Actor {
   override def receive: Actor.Receive = {
     case Received(data) => {
-      val decoded = data.utf8String
       //      sender() ! Write(ByteString(s"You told us: $decoded"))
-      log.info(s"Get data: $decoded")
+      log.info(s"Get data: ${data.utf8String}")
       handler ! ByteString(data)
     }
     case message: ConnectionClosed =>

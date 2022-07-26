@@ -43,7 +43,7 @@ class PacketHandler(sessions: ActorRef, connection: ActorRef) extends Actor with
     case SendingPacket(p) => {
       val bits = PacketsHelper.encode(p)
       val envelope = ByteString(bits.require.toByteArray)
-      log.info("Got in case SendingPacket" + envelope)
+      log.info("Sending packet to device: " + envelope)
       connection ! Write(envelope)
     }
     case Closing => {
