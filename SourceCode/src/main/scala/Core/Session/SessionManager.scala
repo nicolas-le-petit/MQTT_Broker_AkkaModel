@@ -1,11 +1,14 @@
 package Core.Session
 
-import PacketHandler.Connect
+import Core.PacketHandler.Connect
 import akka.actor.{Actor, ActorLogging, ActorRef, Props}
 
 import java.net.URLEncoder
 import java.util.UUID
-
+/*
+@Brief: This actor check and pawn SessionManager for each valid connection
+@Note : None
+*/
 class SessionsManagerActor(bus: ActorRef) extends Actor with ActorLogging {
 
   def getActorName(client_id: String): String = {

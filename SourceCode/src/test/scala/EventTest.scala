@@ -1,19 +1,16 @@
 package Test
 
+import Core.Session._
 import akka.actor.{ActorSystem, Props}
 import akka.testkit.{ImplicitSender, TestKit}
-import Core.Connection._
-import Core.Session._
-import akka.actor.Status.Success
 import org.scalatest.BeforeAndAfterAll
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 
-//import org.specs2.mutable._
-//import org.specs2.specification.Scope
-import org.scalatest.wordspec.AnyWordSpec
-
+/*
+@Brief: Test functions: Publish and Subscribe
+@Note : None
+*/
 class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
   with AnyWordSpecLike
   with Matchers

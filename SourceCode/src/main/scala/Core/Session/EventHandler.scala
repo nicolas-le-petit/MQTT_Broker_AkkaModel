@@ -1,14 +1,18 @@
 package Core.Session
 
-import akka.actor.TypedActor.self
-import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props, TypedActor}
+import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props}
 
 case class BusSubscribe(topic: String, actor: ActorRef, qos: Int = 0)
 case class BusUnsubscribe(topic: String, actor: ActorRef)
 case class BusPublish(topic: String, payload: Any, retain: Boolean = false, clean_retain: Boolean = false)
 case class BusDeattach(actor: ActorRef)
 case class PublishPayload(payload: Any, auto: Boolean, qos: Int = 0)
-
+class BadSubscriptionException(msg: String) extends Throwable
+/*
+@Brief: This actor separates packet's information to get the data and actions need to implement
+        Get the topic, payload, flags -> implement the request
+@Note : None
+*/
 class EventBusActor extends Actor with ActorLogging {
 
   context become working(List(), List())
@@ -136,25 +140,21 @@ object MqttTopicClassificator {
   }
 }
 
-class BadSubscriptionException(msg: String) extends Throwable
-
-case class Subscriptions(topic: String, actor: ActorRef, qos: Int)
-case class Burst(subscriptions: Subscriptions, publish: BusPublish)
-object TestEvent extends App {
-  import akka.actor.Actor
-  private val topicTest: String = "Hello"
-  private val qosTest: Int = 1
-  private val payloadTest: Any = "World"
-
-  val system = ActorSystem("EventBus")
-  val actorTest = system.actorOf(Props[EventBusActor],"BusTest")
-  val PubTest = BusPublish(topicTest,payloadTest)
-  val UnsubTest = BusUnsubscribe(topicTest, actorTest)
-  val ScriptionTest = Subscriptions(topicTest, actorTest, qosTest)
-  actorTest ! BusSubscribe("greetings", actorTest)
-//  actorTest ! BusPublish("time", "123")
-  actorTest ! BusPublish("greetings", "hello")
-//  val burstTest = Burst(List[ScriptionTest, PubTest])
-//  actorTest ! PubTest
-//  actorTest ! ScriptionTest
-}
+//case class Subscriptions(topic: String, actor: ActorRef, qos: Int)
+//object TestEvent extends App {
+//  private val topicTest: String = "Hello"
+//  private val qosTest: Int = 1
+//  private val payloadTest: Any = "World"
+//
+//  val system = ActorSystem("EventBus")
+//  val actorTest = system.actorOf(Props[EventBusActor],"BusTest")
+//  val PubTest = BusPublish(topicTest,payloadTest)
+//  val UnsubTest = BusUnsubscribe(topicTest, actorTest)
+//  val ScriptionTest = Subscriptions(topicTest, actorTest, qosTest)
+//  actorTest ! BusSubscribe("greetings", actorTest)
+////  actorTest ! BusPublish("time", "123")
+//  actorTest ! BusPublish("greetings", "hello")
+////  val burstTest = Burst(List[ScriptionTest, PubTest])
+////  actorTest ! PubTest
+////  actorTest ! ScriptionTest
+//}

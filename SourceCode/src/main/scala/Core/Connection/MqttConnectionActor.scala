@@ -1,7 +1,7 @@
 package Core.Connection
 
+import Core.PacketHandler.{Connect, Disconnect, Header, Packet}
 import Core.Session.{KeepAliveTimeout, WrongState}
-import PacketHandler.{Connect, Disconnect, Header, Packet}
 import akka.actor.{ActorLogging, ActorRef, ActorSystem, FSM}
 import akka.pattern.ask
 import akka.util.Timeout
@@ -18,9 +18,17 @@ sealed trait ConnectionBag
 case class EmptyConnectionBag() extends ConnectionBag
 case class ConnectionSessionBag(session: ActorRef, connection: ActorRef) extends ConnectionBag
 
+/*
+@Brief: This actor receive the decoded packet and check their type
+        If connection request: ask to create a new SessionManager to manage that connection (or device) and wait to send back ACK
+        If disconnection or timeout -> send close request
+        If normal request -> deliver to SessionManager to analyze and implement
+@Note : FSM here
+*/
 class MqttConnectionActor(sessions: ActorRef) extends FSM[ConnectionState, ConnectionBag] with ActorLogging{
 
 //  val log_actor = context.system.actorSelection("akka://jetmq/system/*LogstashTcpUploader")
+  //start with Idle state
   startWith(Waiting, EmptyConnectionBag())
 
   //here is the connected state
@@ -67,15 +75,16 @@ class MqttConnectionActor(sessions: ActorRef) extends FSM[ConnectionState, Conne
       stay
     }
   }
-  //
+
+  //wait here to get connection packet
   when(Waiting) {
-    //when receive connect packet
+    //event receive connect packet
     case Event(ReceivedPacket(c: Connect), _) => {
       log.info("Get connect Packet")
       implicit val timeout = Timeout(1 seconds)
-      //ask for session
-      val sessionF: Future[ActorRef] = ask(sessions, c).mapTo[ActorRef]//ask for a session/actor
-      val session = Await.result(sessionF, timeout.duration)//
+      //ask for a session
+      val sessionF: Future[ActorRef] = ask(sessions, c).mapTo[ActorRef]
+      val session = Await.result(sessionF, timeout.duration)//avoid blocking
 
 //      log_actor ! PacketTrace(self.path.toString, true, c)
       session ! c
@@ -109,10 +118,5 @@ class MqttConnectionActor(sessions: ActorRef) extends FSM[ConnectionState, Conne
   }
 
   initialize()
-}
-
-object MqttConnectionActorTest extends App {
-  val system = ActorSystem("MqttConnectionActorTest")
-
 }
 

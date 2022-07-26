@@ -1,7 +1,7 @@
 package Core.Session
 
+import Core.PacketHandler.{Connack, Connect, Disconnect, Header, Packet, Pingreq, Pingresp, Puback, Pubcomp, Publish, Pubrec, Pubrel, Suback, Subscribe, Unsuback, Unsubscribe}
 import Core._
-import _root_.PacketHandler._
 import akka.actor.{ActorRef, ActorSystem, FSM}
 /*The FSM trait takes two type parameters:
 
@@ -34,6 +34,13 @@ case object KeepAliveTimeout
 
 case object TrySending
 
+/*
+@Brief: This actor receive the decoded packets which have been classify
+        If connection request: check infor and send ACK
+        If normal request -> send to EventHandler to analyze and implement request
+        Control delivery flow
+@Note : FSM here
+*/
 class SessionActor(bus: ActorRef) extends FSM[SessionState, SessionBag] {
 
   //StartWith defines the initial state and initial data
@@ -45,11 +52,11 @@ class SessionActor(bus: ActorRef) extends FSM[SessionState, SessionBag] {
     case Event(c: Connect, bag: SessionWaitingBag) => {
       val status = if (c.client_id.length == 0 && c.connect_flags.clean_session == false) 2 else 0
       val result = if (c.connect_flags.clean_session == false && status == 0 && bag.clean_session == false) status + 256 else status
-
+      //send CONNACK
       sender ! Connack(Header(dup = false, 0, retain = false), result)
       log.info("Sent back CONNACK: " + Header(dup = false, 0, retain = false) + "/" + result)
       log.info("Sender: " + sender)
-
+      //check control flag
       if (status == 0) {
         if (c.connect_flags.clean_session == false) {
           log.info("current stashed is " + bag.stashed)
@@ -71,12 +78,12 @@ class SessionActor(bus: ActorRef) extends FSM[SessionState, SessionBag] {
             }
           }
         }
-
+        //check timeout
         if (c.connect_flags.keep_alive > 0) {
           val delay = c.connect_flags.keep_alive.seconds
           context.system.scheduler.scheduleOnce(delay, self, CheckKeepAlive(delay))(context.system.dispatcher)
         }
-
+        //check will flag
         val will = if (c.connect_flags.will_flag == true)
           Some(
             Publish(
@@ -111,7 +118,7 @@ class SessionActor(bus: ActorRef) extends FSM[SessionState, SessionBag] {
   }
 
   when(SessionConnected) {
-
+    //check timeout
     case Event(CheckKeepAlive(delay), b:SessionConnectedBag) => {
       log.info("Last package was " + new java.util.Date(b.last_packet))
       if ((System.currentTimeMillis() - delay.toMillis) < b.last_packet) {
@@ -126,13 +133,13 @@ class SessionActor(bus: ActorRef) extends FSM[SessionState, SessionBag] {
         stay
       }
     }
-
+    //Subscribe handling
     case Event(p: Subscribe, b:SessionConnectedBag) => {
       p.topics.foreach(t => bus ! BusSubscribe(t._1, self, t._2))
       sender ! Suback(Header(dup = false, 0, retain = false), p.message_identifier, p.topics.map(x => x._2))
       stay using b.copy(last_packet = System.currentTimeMillis())
     }
-
+    //Publsish handling
     case Event(p: Publish, b:SessionConnectedBag) => {
       if (p.header.qos == 1) {
         sender ! Puback(Header(dup = false, 0, retain = false), p.message_identifier)
@@ -182,13 +189,13 @@ class SessionActor(bus: ActorRef) extends FSM[SessionState, SessionBag] {
         }
       }))
     }
-
+    //Unsubscribe handling
     case Event(p: Unsubscribe, b:SessionConnectedBag) => {
       p.topics.foreach(t => bus ! BusUnsubscribe(t, self))
       sender ! Unsuback(Header(dup = false, 0, retain = false), p.message_identifier)
       stay using b.copy(last_packet = System.currentTimeMillis())
     }
-
+    //Ping handling
     case Event(p: Pingreq, b:SessionConnectedBag) => {
       sender ! Pingresp(Header(dup = false, 0, retain = false))
       stay using b.copy(last_packet = System.currentTimeMillis())
@@ -206,7 +213,7 @@ class SessionActor(bus: ActorRef) extends FSM[SessionState, SessionBag] {
         stay
       }
     }
-
+    //connection lost handling
     case Event(ConnectionLost, b: SessionConnectedBag) => {
       log.info("idle")
       if (b.will.isDefined) {
@@ -249,9 +256,4 @@ class SessionActor(bus: ActorRef) extends FSM[SessionState, SessionBag] {
   }
 
   initialize()
-}
-
-object TestSession extends App{
-  val system = ActorSystem("SessionTest")
-
 }

@@ -1,33 +1,29 @@
 package Core.Connection
 
 import Core.Session.{EventBusActor, SessionsManagerActor}
-import PacketHandler.{Packet, PacketsHelper}
-import Supporter.SupportFunction.ByteStringConvert
-import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props}
-import akka.io.{IO, Tcp}
-import akka.io.Tcp.{Bind, Bound, CommandFailed, Connected, Register}
-import akka.stream.{Graph, Materializer, SourceShape}
-import scodec.Attempt.Failure
-//import akka.stream.scaladsl.{Flow, Sink, Source, Tcp}
-import akka.util.ByteString
-
-import java.net.InetSocketAddress
-
-import java.net.InetSocketAddress
-
-import akka.actor.{ActorSystem, Props, Actor}
-import akka.io.{Tcp, IO}
+import akka.actor.{Actor, ActorLogging, ActorRef, Props}
 import akka.io.Tcp._
+import akka.io.{IO, Tcp}
+import akka.stream.Materializer
 import akka.util.ByteString
+import java.net.InetSocketAddress
 
+/*
+@Brief: This actor opens the socket and listen to any connection requests from devices - root actor
+        Using IO Stream to manage the connections and packet flows
+        Receiving any packet from TCP connection -> convert to ByteString to forward to PacketTransformer
+@Note : None
+*/
 class Server(address: String, port: Int) extends Actor {
+
   import context.system
+
   IO(Tcp) ! Bind(self, new InetSocketAddress(address, port))
 
-  val eventHandler = system.actorOf(Props[EventBusActor], name = "eventHandler")//handle Events
-  val sessionsManager = system.actorOf(Props(new SessionsManagerActor(eventHandler)), name = "sessionsManager")//manage Sessions
+  val eventHandler = system.actorOf(Props[EventBusActor], name = "eventHandler") //handle Events
+  val sessionsManager = system.actorOf(Props(new SessionsManagerActor(eventHandler)), name = "sessionsManager") //manage Sessions
 
-  implicit val mat: Materializer = Materializer(system)//implementor of blueprint
+  implicit val mat: Materializer = Materializer(system) //implementor of blueprint
   println("Local host at :" + address + ":" + port)
   private var conn_count = 0
 
@@ -36,32 +32,30 @@ class Server(address: String, port: Int) extends Actor {
       println(s"Server started on $local")
     case Connected(remote, local) =>
       conn_count += 1
+      val postActorName = remote.toString.substring(1) // to remove special char
+      val handler = context.actorOf(Props(classOf[PacketHandler], sessionsManager, sender()), "PacketHandler" + postActorName) // as a handler
+      val forwarder = context.actorOf(Props(classOf[TCPConnectionHandler], handler), "TCPConnectionHandler" + postActorName) // as a Publisher
 
-      val handler = context.actorOf(Props(classOf[PacketHandler], sessionsManager, sender()), "PacketHandler" + conn_count)// as a handler
-      val forwarder = context.actorOf(Props(classOf[TCPConnectionHandler], handler), "TCPConnectionHandler" + conn_count)// as a Publisher
-//      val endpoint = system.actorOf(Props(classOf[EndPoint]), "EndPoint" + conn_count)
-//    val forwarder = context.actorOf(Props(classOf[TCPConnectionHandler], endpoint), "TCPConnectionHandler" + conn_count)
       println(s"New connnection number $conn_count: $local -> $remote")
       sender() ! Register(forwarder, keepOpenOnPeerClosed = true)
   }
 }
 
-
-class TCPConnectionHandler (handler: ActorRef) extends ActorLogging with Actor {
+class TCPConnectionHandler(handler: ActorRef) extends ActorLogging with Actor {
   override def receive: Actor.Receive = {
-    case Received(data) =>{
+    case Received(data) => {
       val decoded = data.utf8String
-//      sender() ! Write(ByteString(s"You told us: $decoded"))
+      //      sender() ! Write(ByteString(s"You told us: $decoded"))
       log.info(s"Get data: $decoded")
       handler ! ByteString(data)
     }
     case message: ConnectionClosed =>
       println(s"The connection $handler has been closed")
       context stop self
-//    case msg: ByteString => {
-//      log.info(s"Send back to device: $msg")
-//      Tcp.Write(msg)
-//    }
+    //    case msg: ByteString => {
+    //      log.info(s"Send back to device: $msg")
+    //      Tcp.Write(msg)
+    //    }
   }
 }
 
