@@ -1,5 +1,0 @@
-package Web
-
-class HTTPHandler {
-
-}
