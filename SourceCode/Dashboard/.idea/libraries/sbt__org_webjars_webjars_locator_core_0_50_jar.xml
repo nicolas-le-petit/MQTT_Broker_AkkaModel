@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="sbt: org.webjars:webjars-locator-core:0.50:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/org/webjars/webjars-locator-core/0.50/webjars-locator-core-0.50.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/org/webjars/webjars-locator-core/0.50/webjars-locator-core-0.50-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/org/webjars/webjars-locator-core/0.50/webjars-locator-core-0.50-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

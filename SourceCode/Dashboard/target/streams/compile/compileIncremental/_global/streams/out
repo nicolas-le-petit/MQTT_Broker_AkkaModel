@@ -1,0 +1,6 @@
+[debug] [zinc] IncrementalCompile -----------
+[debug] IncrementalCompile.incrementalCompile
+[debug] previous = Stamps for: 31 products, 18 sources, 9 libraries
+[debug] current source = Set(${BASE}/target/scala-2.13/routes/main/controllers/javascript/JavaScriptReverseRoutes.scala, ${BASE}/app/Filters.scala, ${BASE}/app/models/TSData.scala, ${BASE}/target/scala-2.13/twirl/main/views/html/index.template.scala, ${BASE}/app/services/Counter.scala, ${BASE}/app/filters/ExampleFilter.scala, ${BASE}/target/scala-2.13/routes/main/controllers/routes.java, ${BASE}/app/controllers/CountController.scala, ${BASE}/target/scala-2.13/routes/main/router/Routes.scala, ${BASE}/target/scala-2.13/routes/main/controllers/ReverseRoutes.scala, ${BASE}/app/Module.scala, ${BASE}/app/services/MQTTSubscriber.scala, ${BASE}/target/scala-2.13/twirl/main/views/html/main.template.scala, ${BASE}/app/controllers/HomeController.scala, ${BASE}/target/scala-2.13/twirl/main/views/html/welcome.template.scala, ${BASE}/app/controllers/AsyncController.scala, ${BASE}/app/services/ApplicationTimer.scala, ${BASE}/target/scala-2.13/routes/main/router/RoutesPrefix.scala)
+[debug] > initialChanges = InitialChanges(Changes(added = Set(), removed = Set(), changed = Set(), unmodified = ...),Set(),Set(),API Changes: Set())
+[debug] No changes

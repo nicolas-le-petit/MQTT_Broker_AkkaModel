@@ -1,0 +1,2 @@
+[debug] Subclass fingerprints: List((org.scalatest.Suite,false,org.scalatest.tools.Framework$$anon$1@3c79423c), (junit.framework.TestCase,false,com.novocode.junit.JUnit3Fingerprint@79933374))
+[debug] Annotation fingerprints: List((org.scalatest.WrapWith,false,org.scalatest.tools.Framework$$anon$2@be872fb), (org.junit.runner.RunWith,false,com.novocode.junit.RunWithFingerprint@7d76b918), (org.junit.Test,false,com.novocode.junit.JUnitFingerprint@1d9e3d51))

@@ -1,0 +1,17 @@
+[debug] downloaded https://repo1.maven.org/maven2/com/typesafe/sbt/sbt-less_2.12_1.0/1.1.2/sbt-less-1.1.2.pom
+[debug] downloaded https://repo1.maven.org/maven2/com/typesafe/sbt/sbt-less_2.12_1.0/1.1.2/sbt-less-1.1.2.pom.sha1
+[debug] downloaded https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.typesafe.sbt/sbt-less/scala_2.12/sbt_1.0/1.1.2/ivys/ivy.xml
+[debug] downloaded https://repo1.maven.org/maven2/org/webjars/es6-promise-node/2.1.1/es6-promise-node-2.1.1.pom
+[debug] downloaded https://repo1.maven.org/maven2/org/webjars/less-node/2.7.2/less-node-2.7.2.pom
+[debug] downloaded https://repo1.maven.org/maven2/org/webjars/npm/clean-css/4.0.5/clean-css-4.0.5.pom
+[debug] downloaded https://repo1.maven.org/maven2/org/webjars/npm/less-plugin-clean-css/1.5.1/less-plugin-clean-css-1.5.1.pom
+[debug] downloaded https://repo1.maven.org/maven2/org/webjars/less-parent/2.7.2/less-parent-2.7.2.pom
+[debug] downloaded https://repo1.maven.org/maven2/org/webjars/es6-promise-parent/2.1.1/es6-promise-parent-2.1.1.pom
+[debug] downloaded https://repo1.maven.org/maven2/org/webjars/npm/source-map/maven-metadata.xml
+[debug] downloaded https://repo1.maven.org/maven2/org/webjars/npm/source-map/0.5.7/source-map-0.5.7.pom
+[debug] downloaded https://repo1.maven.org/maven2/org/webjars/npm/less-plugin-clean-css/1.5.1/less-plugin-clean-css-1.5.1.jar
+[debug] downloaded https://repo1.maven.org/maven2/org/webjars/es6-promise-node/2.1.1/es6-promise-node-2.1.1.jar
+[debug] downloaded https://repo1.maven.org/maven2/org/webjars/npm/source-map/0.5.7/source-map-0.5.7.jar
+[debug] downloaded https://repo1.maven.org/maven2/org/webjars/npm/clean-css/4.0.5/clean-css-4.0.5.jar
+[debug] downloaded https://repo1.maven.org/maven2/org/webjars/less-node/2.7.2/less-node-2.7.2.jar
+[debug] downloaded https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.typesafe.sbt/sbt-less/scala_2.12/sbt_1.0/1.1.2/jars/sbt-less.jar

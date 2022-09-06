@@ -1,0 +1,5 @@
+[error] E:\6.Project\Scala\Template_Testing\conf\routes:18:1: type WebJarAssets is not a member of package controllers
+[error] GET     /webjars/*file              controllers.WebJarAssets.at(file)
+[error] E:\6.Project\Scala\Template_Testing\conf\routes:18:1: type WebJarAssets is not a member of package controllers
+[error] GET     /webjars/*file              controllers.WebJarAssets.at(file)
+[error] two errors found

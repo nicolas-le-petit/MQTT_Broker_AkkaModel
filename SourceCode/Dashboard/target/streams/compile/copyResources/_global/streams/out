@@ -1,0 +1,4 @@
+[debug] Copy resource mappings: 
+[debug] 	(E:\1.Study\1.VGU\4.Semester_4\MQTT_Broker_AkkaModel\SourceCode\Dashboard\conf\application.conf,E:\1.Study\1.VGU\4.Semester_4\MQTT_Broker_AkkaModel\SourceCode\Dashboard\target\scala-2.13\classes\application.conf)
+[debug] 	(E:\1.Study\1.VGU\4.Semester_4\MQTT_Broker_AkkaModel\SourceCode\Dashboard\conf\logback.xml,E:\1.Study\1.VGU\4.Semester_4\MQTT_Broker_AkkaModel\SourceCode\Dashboard\target\scala-2.13\classes\logback.xml)
+[debug] 	(E:\1.Study\1.VGU\4.Semester_4\MQTT_Broker_AkkaModel\SourceCode\Dashboard\conf\routes,E:\1.Study\1.VGU\4.Semester_4\MQTT_Broker_AkkaModel\SourceCode\Dashboard\target\scala-2.13\classes\routes)

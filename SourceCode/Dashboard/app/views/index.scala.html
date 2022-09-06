@@ -1,0 +1,36 @@
+@*
+ * This template takes a two arguments, a String containing a
+ * message to display and an AssetsFinder to locate static assets.
+ *@
+@(message: String)(implicit assetsFinder: AssetsFinder)
+
+@*
+ * Call the `main` template with two arguments. The first
+ * argument is a `String` with the title of the page, the second
+ * argument is an `Html` object containing the body of the page.
+ *@
+@main("Welcome to Play") {
+
+    @*
+     * Get an `Html` object by calling the built-in Play welcome
+     * template and passing a `String` message.
+     *@
+    @*<div class="container">
+        <ul id="dataset"></ul>
+        <form id="dataForm" method="post" action="/tsdata">
+            <label for="dataStation">Station</label>
+            <input id="dataStation" required>
+            <label for="dataStatus">Status</label>
+            <input id="dataStatus" required>
+            <label for="dataTemp">Temperature</label>
+            <input id="dataTemp" required>
+            <label for="dataHumid">Humidity</label>
+            <input id="dataHumid" required>
+            <button>Add Data</button>
+        </form>
+    </div>*@
+    <h1>Welcome to Play</h1>
+    <a href= "http://localhost:9000/welcome" > More Information </a></br>
+    <a href= "http://localhost:9000/subscribe" > Subscribe A Topic </a></br>
+    <a href= "http://localhost:9000" > Home </a>
+}
