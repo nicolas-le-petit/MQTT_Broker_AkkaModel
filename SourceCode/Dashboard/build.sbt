@@ -9,7 +9,7 @@ lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .enablePlugins(SbtWeb)
   .settings(
-    name := """Template_Testing""",
+    name := """Dashboard""",
     version := "1.0-SNAPSHOT",
     scalaVersion := "2.13.8",
     libraryDependencies ++= Seq(

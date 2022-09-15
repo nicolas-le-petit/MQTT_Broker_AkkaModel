@@ -26,6 +26,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor-testkit-typed" % AkkaVersion % Test,
   "org.scalatest" %% "scalatest-wordspec" % TestVersion % "test",
   "com.typesafe.akka" %% "akka-slf4j" % "2.6.5",
-  "ch.qos.logback" % "logback-classic" % "1.2.11"
+  "ch.qos.logback" % "logback-classic" % "1.2.11",
+  "org.specs2" %% "specs2-core" % "4.16.1" % "test"
 )
 parallelExecution in Test := false

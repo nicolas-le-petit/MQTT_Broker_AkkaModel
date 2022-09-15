@@ -201,6 +201,7 @@ class SessionActor(bus: ActorRef) extends FSM[SessionState, SessionBag] {
       stay using b.copy(last_packet = System.currentTimeMillis())
     }
 
+    //Payload
     case Event(x@PublishPayload(p: Publish, _, _), b: SessionConnectedBag) => {
       val qos = p.header.qos min x.qos
       val publish = Publish(Header(p.header.dup, qos, x.auto), p.topic, if (qos == 0) 0 else b.message_id, p.payload)

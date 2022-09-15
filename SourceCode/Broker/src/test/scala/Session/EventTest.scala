@@ -1,6 +1,7 @@
-package Test
+package Session
 
 import Core.Session._
+import Test.UserTimer
 import akka.actor.{ActorSystem, Props}
 import akka.testkit.{ImplicitSender, TestKit}
 import org.scalatest.BeforeAndAfterAll
@@ -8,8 +9,9 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 
 /*
-@Brief: Test functions: Publish and Subscribe
-@Note : None
+@Brief: Test list below evaluates Event_Handler's functions
+        Checking implementing pub/sub in various conditions
+@Note : Work well - DungTT :)))
 */
 class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
   with AnyWordSpecLike
@@ -28,10 +30,10 @@ class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
 
       expectMsg(PublishPayload("hello", false))
 
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
     }
 
-    "SubscribeFunction: Multi level wildcard (#) - ok!" in {
+    "SubscribeFunction: Multiple level wildcard (#) - ok!" in {
 
       val bus = system.actorOf(Props[EventBusActor])
       bus ! BusSubscribe("parent/f1/f2/#", self)
@@ -44,7 +46,7 @@ class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
       bus ! BusPublish("parent/f1/f2/f3/f4", "3")
       expectMsg(PublishPayload("3", false))
 
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
     }
 
 
@@ -57,7 +59,7 @@ class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
 
       bus ! BusPublish("sport/tennis/player2/ranking", "2")
 
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
     }
 
     "SubscribeFunction: square for parent level - ok" in {
@@ -67,13 +69,13 @@ class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
       bus ! BusPublish("parent", "1")
       expectMsg(PublishPayload("1", false))
 
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
 
       bus ! BusSubscribe("#", self)
       bus ! BusPublish("parent", "2")
       expectMsg(PublishPayload("2", false))
 
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
     }
 
     "SubscribeFunction: sub all - ok" in {
@@ -89,7 +91,7 @@ class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
       bus ! BusPublish("any/1/2/3/values", "3")
       expectMsg(PublishPayload("3", false))
 
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
     }
 
     "is parent/f1/# a valid topic? - ok" in {
@@ -100,7 +102,7 @@ class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
       bus ! BusPublish("sport/tennis/123", "1")
       expectMsg(PublishPayload("1", false))
 
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
 //      success
     }
 
@@ -123,14 +125,14 @@ class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
       expectMsg(PublishPayload("2", false))
 
       bus ! BusPublish("parent/f1/f2/f3", "3")//incorrect
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
     }
 
     "SubscribeFunction: check no parent level for plus - ok" in {
       val bus = system.actorOf(Props[EventBusActor])
       bus ! BusSubscribe("parent/+", self)
       bus ! BusPublish("parent", "1")//incorrect
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
 
       bus ! BusPublish("parent/", "2")//correct
       expectMsg(PublishPayload("2", false))
@@ -157,7 +159,7 @@ class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
       val bus = system.actorOf(Props[EventBusActor])
       bus ! BusSubscribe("+", self)
       bus ! BusPublish("/parent", "1")
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
     }
 
     "SubscribeFunction: check both (+) and (#)" in {
@@ -191,7 +193,7 @@ class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
       val bus = system.actorOf(Props[EventBusActor])
       //not published yet - fail
       bus ! BusSubscribe("game/score", self)
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
 
       bus ! BusUnsubscribe("game/score", self)
       //publish with retain
@@ -211,7 +213,7 @@ class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
       val bus = system.actorOf(Props[EventBusActor])
 
       bus ! BusSubscribe("game/score", self)
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
 
       bus ! BusUnsubscribe("game/score", self)
 
@@ -229,10 +231,10 @@ class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
       bus ! BusUnsubscribe("game/score", self)
 
       bus ! BusSubscribe("game/score", self)
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
 
       bus ! BusSubscribe("#", self)
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
 
     }
 
@@ -240,22 +242,22 @@ class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
       val bus = system.actorOf(Props[EventBusActor])
 
       bus ! BusSubscribe("/#", self)
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
 
       bus ! BusUnsubscribe("/Topic/C", self)
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
 
       bus ! BusPublish("TopicA/B", "1", true)
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
 
       bus ! BusPublish("TopicA/B", "2", false)
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
 
       bus ! BusPublish("Topic/C", "3", true)
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
 
       bus ! BusPublish("TopicA", "4", false)
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
 
       bus ! BusPublish("/TopicA", "5", false)
       expectMsg(PublishPayload("5", false))
@@ -267,7 +269,7 @@ class EventTest extends TestKit(ActorSystem("BusSpec")) with ImplicitSender
       expectMsg(PublishPayload("6", false))
 
       bus ! BusPublish("TopicA/C", "7", true)
-      expectNoMessage(UserTimer.wait_time)
+      expectNoMessage(UserTimer.wait_time_50mil)
 
       bus ! BusPublish("/TopicA", "8", true)
       expectMsg(PublishPayload("8", false))
