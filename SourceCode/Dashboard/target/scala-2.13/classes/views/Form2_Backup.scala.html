@@ -1,0 +1,36 @@
+@(topicList: Seq[String], payloadList: Seq[String])(implicit assetsFinder: AssetsFinder, request: RequestHeader)
+
+@main("Form2"){
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <ul class="col-md-8">
+                <ul class="card">
+                    <div class="card-header">SUBSCRIBE FORM</div>
+                        <form id="dataForm" method="post" action="@routes.HomeController.getTopicSubscribe">
+                            <div class="form-group">
+                                <label for="">Subscibe to Topic</label>
+                                <input type="text" name="subTopic" id="subTopic" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit">Subscribe</button>
+                            </div>
+                        </form>
+                        <ul>
+                            @for(topic <- topicList){
+                                <li>@topic</li>
+                                @for(payload <- payloadList){
+                                    <li>@payload</li>
+                                }
+                            }
+                        </ul>
+
+                </ul>
+            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+}

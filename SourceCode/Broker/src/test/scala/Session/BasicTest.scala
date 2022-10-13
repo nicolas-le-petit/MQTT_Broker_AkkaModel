@@ -2,7 +2,6 @@ package Session
 
 import Connection.mqttRequest
 import Core.Connection.Server
-import Core.Session.PublishPayload
 import Support.clientSimulator
 import Test.UserTimer.wait_time_500mil
 import akka.io.Tcp.Register

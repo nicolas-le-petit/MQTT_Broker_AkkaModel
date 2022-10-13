@@ -2,7 +2,7 @@ package Core.Connection
 
 import Core.PacketHandler.{Connect, Disconnect, Header, Packet}
 import Core.Session.{KeepAliveTimeout, WrongState}
-import akka.actor.{ActorLogging, ActorRef, ActorSystem, FSM}
+import akka.actor.{ActorLogging, ActorRef, FSM}
 import akka.pattern.ask
 import akka.util.Timeout
 

@@ -13,36 +13,36 @@ import _root_.controllers.Assets.Asset
 class Routes(
   override val errorHandler: play.api.http.HttpErrorHandler, 
   // @LINE:6
-  HomeController_0: controllers.HomeController,
-  // @LINE:10
-  CountController_1: controllers.CountController,
-  // @LINE:12
-  AsyncController_2: controllers.AsyncController,
-  // @LINE:15
-  Assets_3: controllers.Assets,
-  // @LINE:21
   webjars_Routes_0: webjars.Routes,
+  // @LINE:8
+  HomeController_0: controllers.HomeController,
+  // @LINE:12
+  CountController_1: controllers.CountController,
+  // @LINE:14
+  AsyncController_2: controllers.AsyncController,
+  // @LINE:17
+  Assets_3: controllers.Assets,
   val prefix: String
 ) extends GeneratedRouter {
 
    @javax.inject.Inject()
    def this(errorHandler: play.api.http.HttpErrorHandler,
     // @LINE:6
+    webjars_Routes_0: webjars.Routes,
+    // @LINE:8
     HomeController_0: controllers.HomeController,
-    // @LINE:10
-    CountController_1: controllers.CountController,
     // @LINE:12
+    CountController_1: controllers.CountController,
+    // @LINE:14
     AsyncController_2: controllers.AsyncController,
-    // @LINE:15
-    Assets_3: controllers.Assets,
-    // @LINE:21
-    webjars_Routes_0: webjars.Routes
-  ) = this(errorHandler, HomeController_0, CountController_1, AsyncController_2, Assets_3, webjars_Routes_0, "/")
+    // @LINE:17
+    Assets_3: controllers.Assets
+  ) = this(errorHandler, webjars_Routes_0, HomeController_0, CountController_1, AsyncController_2, Assets_3, "/")
 
   def withPrefix(addPrefix: String): Routes = {
     val prefix = play.api.routing.Router.concatPrefix(addPrefix, this.prefix)
     router.RoutesPrefix.setPrefix(prefix)
-    new Routes(errorHandler, HomeController_0, CountController_1, AsyncController_2, Assets_3, webjars_Routes_0, prefix)
+    new Routes(errorHandler, webjars_Routes_0, HomeController_0, CountController_1, AsyncController_2, Assets_3, prefix)
   }
 
   private[this] val defaultPrefix: String = {
@@ -50,14 +50,22 @@ class Routes(
   }
 
   def documentation = List(
+    prefixed_webjars_Routes_0_0.router.documentation,
     ("""GET""", this.prefix, """controllers.HomeController.index"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """welcome""", """controllers.HomeController.welcome"""),
-    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """subscribe""", """controllers.HomeController.mqtt"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """count""", """controllers.CountController.count"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """message""", """controllers.AsyncController.message"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """assets/""" + "$" + """file<.+>""", """controllers.Assets.versioned(file:String)"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """assets/""" + "$" + """file<.+>""", """controllers.Assets.at(path:String = "/public", file:String)"""),
-    prefixed_webjars_Routes_0_7.router.documentation,
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """device/loadDevicePage""", """controllers.HomeController.loadDevicePage"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """device/delete/""" + "$" + """device_code<[^/]+>""", """controllers.HomeController.deleteDevice(device_code:String)"""),
+    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """device/create""", """controllers.HomeController.createDevice"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """device/listDevice""", """controllers.HomeController.listAll"""),
+    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """subscribe/getTopic""", """controllers.HomeController.getTopicSubscribe"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """subscribe/""" + "$" + """topic<[^/]+>""", """controllers.HomeController.MQTTsubscribe(topic:String)"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """form2""", """controllers.HomeController.loadForm2"""),
+    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """publishPost""", """controllers.HomeController.MQTTpublishPOST"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """form1/""" + "$" + """device_code<[^/]+>""", """controllers.HomeController.loadForm1(device_code:String)"""),
     Nil
   ).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
     case r @ (_,_,_) => s :+ r.asInstanceOf[(String,String,String)]
@@ -66,10 +74,13 @@ class Routes(
 
 
   // @LINE:6
-  private[this] lazy val controllers_HomeController_index0_route = Route("GET",
+  private[this] val prefixed_webjars_Routes_0_0 = Include(webjars_Routes_0.withPrefix(this.prefix + (if (this.prefix.endsWith("/")) "" else "/") + "webjars"))
+
+  // @LINE:8
+  private[this] lazy val controllers_HomeController_index1_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix)))
   )
-  private[this] lazy val controllers_HomeController_index0_invoker = createInvoker(
+  private[this] lazy val controllers_HomeController_index1_invoker = createInvoker(
     HomeController_0.index,
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
@@ -83,11 +94,11 @@ class Routes(
     )
   )
 
-  // @LINE:7
-  private[this] lazy val controllers_HomeController_welcome1_route = Route("GET",
+  // @LINE:9
+  private[this] lazy val controllers_HomeController_welcome2_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("welcome")))
   )
-  private[this] lazy val controllers_HomeController_welcome1_invoker = createInvoker(
+  private[this] lazy val controllers_HomeController_welcome2_invoker = createInvoker(
     HomeController_0.welcome,
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
@@ -101,25 +112,7 @@ class Routes(
     )
   )
 
-  // @LINE:8
-  private[this] lazy val controllers_HomeController_mqtt2_route = Route("GET",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("subscribe")))
-  )
-  private[this] lazy val controllers_HomeController_mqtt2_invoker = createInvoker(
-    HomeController_0.mqtt,
-    play.api.routing.HandlerDef(this.getClass.getClassLoader,
-      "router",
-      "controllers.HomeController",
-      "mqtt",
-      Nil,
-      "GET",
-      this.prefix + """subscribe""",
-      """""",
-      Seq()
-    )
-  )
-
-  // @LINE:10
+  // @LINE:12
   private[this] lazy val controllers_CountController_count3_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("count")))
   )
@@ -137,7 +130,7 @@ class Routes(
     )
   )
 
-  // @LINE:12
+  // @LINE:14
   private[this] lazy val controllers_AsyncController_message4_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("message")))
   )
@@ -155,7 +148,7 @@ class Routes(
     )
   )
 
-  // @LINE:15
+  // @LINE:17
   private[this] lazy val controllers_Assets_versioned5_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("assets/"), DynamicPart("file", """.+""",false)))
   )
@@ -173,7 +166,7 @@ class Routes(
     )
   )
 
-  // @LINE:16
+  // @LINE:18
   private[this] lazy val controllers_Assets_at6_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("assets/"), DynamicPart("file", """.+""",false)))
   )
@@ -191,55 +184,262 @@ class Routes(
     )
   )
 
-  // @LINE:21
-  private[this] val prefixed_webjars_Routes_0_7 = Include(webjars_Routes_0.withPrefix(this.prefix + (if (this.prefix.endsWith("/")) "" else "/") + "webjars"))
+  // @LINE:25
+  private[this] lazy val controllers_HomeController_loadDevicePage7_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("device/loadDevicePage")))
+  )
+  private[this] lazy val controllers_HomeController_loadDevicePage7_invoker = createInvoker(
+    HomeController_0.loadDevicePage,
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.HomeController",
+      "loadDevicePage",
+      Nil,
+      "GET",
+      this.prefix + """device/loadDevicePage""",
+      """ Funtions""",
+      Seq()
+    )
+  )
+
+  // @LINE:26
+  private[this] lazy val controllers_HomeController_deleteDevice8_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("device/delete/"), DynamicPart("device_code", """[^/]+""",true)))
+  )
+  private[this] lazy val controllers_HomeController_deleteDevice8_invoker = createInvoker(
+    HomeController_0.deleteDevice(fakeValue[String]),
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.HomeController",
+      "deleteDevice",
+      Seq(classOf[String]),
+      "GET",
+      this.prefix + """device/delete/""" + "$" + """device_code<[^/]+>""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:28
+  private[this] lazy val controllers_HomeController_createDevice9_route = Route("POST",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("device/create")))
+  )
+  private[this] lazy val controllers_HomeController_createDevice9_invoker = createInvoker(
+    HomeController_0.createDevice,
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.HomeController",
+      "createDevice",
+      Nil,
+      "POST",
+      this.prefix + """device/create""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:29
+  private[this] lazy val controllers_HomeController_listAll10_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("device/listDevice")))
+  )
+  private[this] lazy val controllers_HomeController_listAll10_invoker = createInvoker(
+    HomeController_0.listAll,
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.HomeController",
+      "listAll",
+      Nil,
+      "GET",
+      this.prefix + """device/listDevice""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:31
+  private[this] lazy val controllers_HomeController_getTopicSubscribe11_route = Route("POST",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("subscribe/getTopic")))
+  )
+  private[this] lazy val controllers_HomeController_getTopicSubscribe11_invoker = createInvoker(
+    HomeController_0.getTopicSubscribe,
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.HomeController",
+      "getTopicSubscribe",
+      Nil,
+      "POST",
+      this.prefix + """subscribe/getTopic""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:32
+  private[this] lazy val controllers_HomeController_MQTTsubscribe12_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("subscribe/"), DynamicPart("topic", """[^/]+""",true)))
+  )
+  private[this] lazy val controllers_HomeController_MQTTsubscribe12_invoker = createInvoker(
+    HomeController_0.MQTTsubscribe(fakeValue[String]),
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.HomeController",
+      "MQTTsubscribe",
+      Seq(classOf[String]),
+      "GET",
+      this.prefix + """subscribe/""" + "$" + """topic<[^/]+>""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:33
+  private[this] lazy val controllers_HomeController_loadForm213_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("form2")))
+  )
+  private[this] lazy val controllers_HomeController_loadForm213_invoker = createInvoker(
+    HomeController_0.loadForm2,
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.HomeController",
+      "loadForm2",
+      Nil,
+      "GET",
+      this.prefix + """form2""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:36
+  private[this] lazy val controllers_HomeController_MQTTpublishPOST14_route = Route("POST",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("publishPost")))
+  )
+  private[this] lazy val controllers_HomeController_MQTTpublishPOST14_invoker = createInvoker(
+    HomeController_0.MQTTpublishPOST,
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.HomeController",
+      "MQTTpublishPOST",
+      Nil,
+      "POST",
+      this.prefix + """publishPost""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:37
+  private[this] lazy val controllers_HomeController_loadForm115_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("form1/"), DynamicPart("device_code", """[^/]+""",true)))
+  )
+  private[this] lazy val controllers_HomeController_loadForm115_invoker = createInvoker(
+    HomeController_0.loadForm1(fakeValue[String]),
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.HomeController",
+      "loadForm1",
+      Seq(classOf[String]),
+      "GET",
+      this.prefix + """form1/""" + "$" + """device_code<[^/]+>""",
+      """""",
+      Seq()
+    )
+  )
 
 
   def routes: PartialFunction[RequestHeader, Handler] = {
   
     // @LINE:6
-    case controllers_HomeController_index0_route(params@_) =>
-      call { 
-        controllers_HomeController_index0_invoker.call(HomeController_0.index)
-      }
-  
-    // @LINE:7
-    case controllers_HomeController_welcome1_route(params@_) =>
-      call { 
-        controllers_HomeController_welcome1_invoker.call(HomeController_0.welcome)
-      }
+    case prefixed_webjars_Routes_0_0(handler) => handler
   
     // @LINE:8
-    case controllers_HomeController_mqtt2_route(params@_) =>
+    case controllers_HomeController_index1_route(params@_) =>
       call { 
-        controllers_HomeController_mqtt2_invoker.call(HomeController_0.mqtt)
+        controllers_HomeController_index1_invoker.call(HomeController_0.index)
       }
   
-    // @LINE:10
+    // @LINE:9
+    case controllers_HomeController_welcome2_route(params@_) =>
+      call { 
+        controllers_HomeController_welcome2_invoker.call(HomeController_0.welcome)
+      }
+  
+    // @LINE:12
     case controllers_CountController_count3_route(params@_) =>
       call { 
         controllers_CountController_count3_invoker.call(CountController_1.count)
       }
   
-    // @LINE:12
+    // @LINE:14
     case controllers_AsyncController_message4_route(params@_) =>
       call { 
         controllers_AsyncController_message4_invoker.call(AsyncController_2.message)
       }
   
-    // @LINE:15
+    // @LINE:17
     case controllers_Assets_versioned5_route(params@_) =>
       call(params.fromPath[String]("file", None)) { (file) =>
         controllers_Assets_versioned5_invoker.call(Assets_3.versioned(file))
       }
   
-    // @LINE:16
+    // @LINE:18
     case controllers_Assets_at6_route(params@_) =>
       call(Param[String]("path", Right("/public")), params.fromPath[String]("file", None)) { (path, file) =>
         controllers_Assets_at6_invoker.call(Assets_3.at(path, file))
       }
   
-    // @LINE:21
-    case prefixed_webjars_Routes_0_7(handler) => handler
+    // @LINE:25
+    case controllers_HomeController_loadDevicePage7_route(params@_) =>
+      call { 
+        controllers_HomeController_loadDevicePage7_invoker.call(HomeController_0.loadDevicePage)
+      }
+  
+    // @LINE:26
+    case controllers_HomeController_deleteDevice8_route(params@_) =>
+      call(params.fromPath[String]("device_code", None)) { (device_code) =>
+        controllers_HomeController_deleteDevice8_invoker.call(HomeController_0.deleteDevice(device_code))
+      }
+  
+    // @LINE:28
+    case controllers_HomeController_createDevice9_route(params@_) =>
+      call { 
+        controllers_HomeController_createDevice9_invoker.call(HomeController_0.createDevice)
+      }
+  
+    // @LINE:29
+    case controllers_HomeController_listAll10_route(params@_) =>
+      call { 
+        controllers_HomeController_listAll10_invoker.call(HomeController_0.listAll)
+      }
+  
+    // @LINE:31
+    case controllers_HomeController_getTopicSubscribe11_route(params@_) =>
+      call { 
+        controllers_HomeController_getTopicSubscribe11_invoker.call(HomeController_0.getTopicSubscribe)
+      }
+  
+    // @LINE:32
+    case controllers_HomeController_MQTTsubscribe12_route(params@_) =>
+      call(params.fromPath[String]("topic", None)) { (topic) =>
+        controllers_HomeController_MQTTsubscribe12_invoker.call(HomeController_0.MQTTsubscribe(topic))
+      }
+  
+    // @LINE:33
+    case controllers_HomeController_loadForm213_route(params@_) =>
+      call { 
+        controllers_HomeController_loadForm213_invoker.call(HomeController_0.loadForm2)
+      }
+  
+    // @LINE:36
+    case controllers_HomeController_MQTTpublishPOST14_route(params@_) =>
+      call { 
+        controllers_HomeController_MQTTpublishPOST14_invoker.call(HomeController_0.MQTTpublishPOST)
+      }
+  
+    // @LINE:37
+    case controllers_HomeController_loadForm115_route(params@_) =>
+      call(params.fromPath[String]("device_code", None)) { (device_code) =>
+        controllers_HomeController_loadForm115_invoker.call(HomeController_0.loadForm1(device_code))
+      }
   }
 }

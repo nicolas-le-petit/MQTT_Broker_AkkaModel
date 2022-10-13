@@ -1,7 +1,7 @@
 import com.google.inject.AbstractModule
 
 import java.time.Clock
-import services.{ApplicationTimer, AtomicCounter, Counter, MQTTSubscriber}
+import services.{ApplicationTimer, AtomicCounter, Counter, PublishService, SubscribeService}
 
 /**
  * This class is a Guice module that tells Guice how to bind several
@@ -21,7 +21,8 @@ class Module extends AbstractModule {
     // Ask Guice to create an instance of ApplicationTimer when the
     // application starts.
     bind(classOf[ApplicationTimer]).asEagerSingleton()
-    bind(classOf[MQTTSubscriber]).asEagerSingleton()
+    bind(classOf[SubscribeService]).asEagerSingleton()
+    bind(classOf[PublishService]).asEagerSingleton()
     // Set AtomicCounter as the implementation for Counter.
     bind(classOf[Counter]).to(classOf[AtomicCounter])
   }

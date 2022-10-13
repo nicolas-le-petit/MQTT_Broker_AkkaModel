@@ -6,10 +6,10 @@ import play.api.routing.JavaScriptReverseRoute
 
 import _root_.controllers.Assets.Asset
 
-// @LINE:6
+// @LINE:8
 package controllers.javascript {
 
-  // @LINE:6
+  // @LINE:8
   class ReverseHomeController(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -17,17 +17,57 @@ package controllers.javascript {
     }
 
   
-    // @LINE:6
-    def index: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.HomeController.index",
+    // @LINE:37
+    def loadForm1: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.loadForm1",
       """
-        function() {
-          return _wA({method:"GET", url:"""" + _prefix + """"})
+        function(device_code0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "form1/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("device_code", device_code0))})
         }
       """
     )
   
-    // @LINE:7
+    // @LINE:36
+    def MQTTpublishPOST: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.MQTTpublishPOST",
+      """
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "publishPost"})
+        }
+      """
+    )
+  
+    // @LINE:29
+    def listAll: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.listAll",
+      """
+        function() {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "device/listDevice"})
+        }
+      """
+    )
+  
+    // @LINE:26
+    def deleteDevice: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.deleteDevice",
+      """
+        function(device_code0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "device/delete/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("device_code", device_code0))})
+        }
+      """
+    )
+  
+    // @LINE:31
+    def getTopicSubscribe: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.getTopicSubscribe",
+      """
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "subscribe/getTopic"})
+        }
+      """
+    )
+  
+    // @LINE:9
     def welcome: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.HomeController.welcome",
       """
@@ -37,19 +77,59 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:8
-    def mqtt: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.HomeController.mqtt",
+    // @LINE:33
+    def loadForm2: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.loadForm2",
       """
         function() {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "subscribe"})
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "form2"})
+        }
+      """
+    )
+  
+    // @LINE:28
+    def createDevice: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.createDevice",
+      """
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "device/create"})
+        }
+      """
+    )
+  
+    // @LINE:8
+    def index: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.index",
+      """
+        function() {
+          return _wA({method:"GET", url:"""" + _prefix + """"})
+        }
+      """
+    )
+  
+    // @LINE:32
+    def MQTTsubscribe: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.MQTTsubscribe",
+      """
+        function(topic0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "subscribe/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("topic", topic0))})
+        }
+      """
+    )
+  
+    // @LINE:25
+    def loadDevicePage: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.loadDevicePage",
+      """
+        function() {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "device/loadDevicePage"})
         }
       """
     )
   
   }
 
-  // @LINE:10
+  // @LINE:12
   class ReverseCountController(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -57,7 +137,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:10
+    // @LINE:12
     def count: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.CountController.count",
       """
@@ -69,7 +149,7 @@ package controllers.javascript {
   
   }
 
-  // @LINE:12
+  // @LINE:14
   class ReverseAsyncController(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -77,7 +157,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:12
+    // @LINE:14
     def message: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.AsyncController.message",
       """
@@ -89,7 +169,7 @@ package controllers.javascript {
   
   }
 
-  // @LINE:15
+  // @LINE:17
   class ReverseAssets(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -97,7 +177,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:15
+    // @LINE:17
     def versioned: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Assets.versioned",
       """
@@ -107,7 +187,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:16
+    // @LINE:18
     def at: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Assets.at",
       """

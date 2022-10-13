@@ -1,15 +1,12 @@
 package PacketHandler
 
-import Core.PacketHandler.{Connack, Connect, ConnectFlags, Header, Packet, Puback, Pubcomp, Publish, Pubrec, Pubrel, Suback, Subscribe}
-import Core.Supporter.SupportFunction.StringHelper
+import Core.PacketHandler._
 import akka.actor.ActorSystem
 import akka.testkit.{ImplicitSender, TestKit}
-import akka.util.ByteString
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
-import org.specs2.mutable._
 import scodec.Codec
 import scodec.bits._
 

@@ -1,0 +1,48 @@
+
+
+@*
+* This template takes a two arguments, a String containing a
+* message to display and an AssetsFinder to locate static assets.
+*@
+
+@(message: String)(implicit assetsFinder: AssetsFinder)
+
+@*
+* Call the `main` template with two arguments. The first
+* argument is a `String` with the title of the page, the second
+* argument is an `Html` object containing the body of the page.
+*@
+
+@main("create Device") {
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Create new device</div>
+                    <div class="card-body">
+                        <form action="@routes.HomeController.createDevice" method="post">
+                            <div class="form-group">
+                                <label for="">Device Name</label>
+                                <input type="text" name="device_name" id="device_name" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Device ID</label>
+                                <input type="text" name="device_code" id="device_code" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Description</label>
+                                <input type="text" name="device_description" id="device_description" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}

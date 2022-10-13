@@ -3,9 +3,8 @@ package Connection
 import Core.Connection.Server
 import Support.clientSimulator
 import Test.UserTimer.{one_sec, wait_time_500mil}
-import akka.io.Tcp
-import akka.io.Tcp.Register
 import akka.actor.{ActorSystem, Props}
+import akka.io.Tcp.Register
 import akka.testkit.{ImplicitSender, TestKit}
 import akka.util.ByteString
 import org.scalatest.BeforeAndAfterAll

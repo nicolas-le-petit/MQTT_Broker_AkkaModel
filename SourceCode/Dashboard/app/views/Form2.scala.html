@@ -1,0 +1,45 @@
+@(topicList: Seq[String], payloadList: Seq[String])(implicit assetsFinder: AssetsFinder, request: RequestHeader)
+
+@main("Form2"){
+
+            @* And here's where we render the `Html` object containing
+            * the page content. *@
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <ul class="col-md-8">
+                        <ul class="card">
+                            <div class="card-header">SUBSCRIBE FORM</div>
+                            <form id="dataForm" method="post" action="@routes.HomeController.getTopicSubscribe">
+                                <div class="form-group">
+                                    <label for="">Subscibe to Topic</label>
+                                    <input type="text" name="subTopic" id="subTopic" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">Subscribe</button>
+                                </div>
+                            </form>
+                            <div id="test">
+
+                            </div>
+@*                            @for(topic <- topicList){*@
+@*                                <div style="border-style: ridge; width: 688px; padding: 20px">*@
+@*                                    <h4>@topic</h4>*@
+@*                                    <ul>*@
+@*                                    @for(payload <- payloadList){*@
+@*                                        <li>@payload</li>*@
+@*                                    }*@
+@*                                    </ul>*@
+@*                                </div>*@
+@*                            }*@
+                        </ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+@*    <script src="@assetsFinder.path("js/test.js")"></script>*@
+
+}
+

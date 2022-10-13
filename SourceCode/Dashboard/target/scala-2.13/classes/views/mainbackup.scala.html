@@ -1,0 +1,26 @@
+@*
+ * This template is called from the `index` template. This template
+ * handles the rendering of the page header and body tags. It takes
+ * three arguments, a `String` for the title of the page and an `Html`
+ * object to insert into the body of the page and an `AssetFinder`
+ * to define to reverse route static assets.
+ *@
+@(title: String)(content: Html)(implicit assetsFinder: AssetsFinder)
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="/public/css/bootstrap.css">
+    </head>
+    <body>
+        @* And here's where we render the `Html` object containing
+         * the page content. *@
+        @content
+            <script src="/public/js/jquery-3.6.1.min.js"></script>
+            <script src="/public/js/bootstrap.min.js"></script>
+    </body>
+</html>

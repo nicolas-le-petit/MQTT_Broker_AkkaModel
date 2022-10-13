@@ -2,35 +2,60 @@
  * This template takes a two arguments, a String containing a
  * message to display and an AssetsFinder to locate static assets.
  *@
-@(message: String)(implicit assetsFinder: AssetsFinder)
+@*
+@(message: String, devicesNameList: List[String], devicesCodeList: List[String], devicesDesList: List[String])
+@(message: String, devicesList: List[(String, String, String)])
+@devicesList = @{TSData.getDeviceList()}
+*@
+
+@(message: String, devicesList: List[DeviceItem])(implicit assetsFinder: AssetsFinder)
 
 @*
  * Call the `main` template with two arguments. The first
  * argument is a `String` with the title of the page, the second
  * argument is an `Html` object containing the body of the page.
  *@
-@main("Welcome to Play") {
 
-    @*
-     * Get an `Html` object by calling the built-in Play welcome
-     * template and passing a `String` message.
-     *@
-    @*<div class="container">
-        <ul id="dataset"></ul>
-        <form id="dataForm" method="post" action="/tsdata">
-            <label for="dataStation">Station</label>
-            <input id="dataStation" required>
-            <label for="dataStatus">Status</label>
-            <input id="dataStatus" required>
-            <label for="dataTemp">Temperature</label>
-            <input id="dataTemp" required>
-            <label for="dataHumid">Humidity</label>
-            <input id="dataHumid" required>
-            <button>Add Data</button>
-        </form>
-    </div>*@
-    <h1>Welcome to Play</h1>
-    <a href= "http://localhost:9000/welcome" > More Information </a></br>
-    <a href= "http://localhost:9000/mqtt" > Subscribe A Topic </a></br>
-    <a href= "http://localhost:9000" > Home </a>
+@main("Welcome to Play") {
+    <title> MQTT DASH BOARD</title>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="http://localhost:9000/device/create" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">+ New Device</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-borded">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Name</th>
+                            <th>ClientID</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(device <- devicesList) {
+                        <tr>
+                                <td>@device.id</td>
+                                <td>@device.name</td>
+                                <td>@device.code</td>
+                                <td>@device.des</td>
+                                <td>
+                                    <a href="http://localhost:9000/form1?device=@device.code" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">Publish</a>
+                                    <a href="http://localhost:9000/form2?device=@device.code" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">Subscribe</a>
+                                    <a href="" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="http://localhost:9000/device/delete/@device.code" class="btn btn-sm btn-danger">Delete</a>
+                                </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
 }

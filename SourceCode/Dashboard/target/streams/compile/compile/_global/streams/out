@@ -1,5 +1,9 @@
-[error] E:\6.Project\Scala\Template_Testing\conf\routes:18:1: type WebJarAssets is not a member of package controllers
-[error] GET     /webjars/*file              controllers.WebJarAssets.at(file)
-[error] E:\6.Project\Scala\Template_Testing\conf\routes:18:1: type WebJarAssets is not a member of package controllers
-[error] GET     /webjars/*file              controllers.WebJarAssets.at(file)
+[error] E:\Thesis\MQTT_Broker_AkkaModel\SourceCode\Dashboard\app\controllers\HomeController.scala:45:24: not enough arguments for method apply: (message: String, clientID: String)(implicit assetsFinder: controllers.AssetsFinder): play.twirl.api.HtmlFormat.Appendable in object Form1.
+[error] Unspecified value parameter clientID.
+[error]     Ok(views.html.Form1("ok form"))
+[error]                        ^
+[error] E:\Thesis\MQTT_Broker_AkkaModel\SourceCode\Dashboard\app\controllers\HomeController.scala:56:26: not enough arguments for method apply: (message: String, clientID: String)(implicit assetsFinder: controllers.AssetsFinder): play.twirl.api.HtmlFormat.Appendable in object Form1.
+[error] Unspecified value parameter clientID.
+[error]       Ok(views.html.Form1(("ok form")))
+[error]                          ^
 [error] two errors found

@@ -1,8 +1,7 @@
 package Core.Session
 
-import Core.PacketHandler.{Connack, Connect, Disconnect, Header, Packet, Pingreq, Pingresp, Puback, Pubcomp, Publish, Pubrec, Pubrel, Suback, Subscribe, Unsuback, Unsubscribe}
-import Core._
-import akka.actor.{ActorRef, ActorSystem, FSM}
+import Core.PacketHandler._
+import akka.actor.{ActorRef, FSM}
 /*The FSM trait takes two type parameters:
 
   the supertype of all state names, usually a sealed trait with case objects extending it

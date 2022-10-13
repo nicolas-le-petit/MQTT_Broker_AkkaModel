@@ -2,10 +2,12 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# WebJars
+->          /webjars                webjars.Routes
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
 GET     /welcome                    controllers.HomeController.welcome
-GET     /subscribe                  controllers.HomeController.mqtt
+
 # An example controller showing how to use dependency injection
 GET     /count                      controllers.CountController.count
 # An example controller showing how to write asynchronous code
@@ -17,5 +19,22 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 #GET     /tsdata                     controllers.HomeController.dataSet
 #POST    /tsdata                     controllers.HomeController.addData
 #GET     /webjars/*file              controllers.WebJarAssets.at(file)
-# WebJars
-->          /webjars                webjars.Routes
+
+
+# Funtions
+GET     /device/loadDevicePage       controllers.HomeController.loadDevicePage
+GET     /device/delete/:device_code  controllers.HomeController.deleteDevice(device_code)
+
+POST    /device/create               controllers.HomeController.createDevice
+GET     /device/listDevice           controllers.HomeController.listAll
+
+POST    /subscribe/getTopic          controllers.HomeController.getTopicSubscribe
+GET     /subscribe/:topic            controllers.HomeController.MQTTsubscribe(topic)
+GET     /form2                       controllers.HomeController.loadForm2
+
+
+POST    /publishPost                 controllers.HomeController.MQTTpublishPOST
+GET     /form1/:device_code          controllers.HomeController.loadForm1(device_code)
+# Test
+#GET     /addData                     controllers.HomeController.addData
+
