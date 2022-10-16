@@ -16,11 +16,11 @@ import javax.inject.{Inject, Singleton}
 @Singleton
 class SubscribeService @Inject() (cc: ControllerComponents, config: Configuration, appLifecycle: ApplicationLifecycle) extends AbstractController(cc) {
 
-  def subscribe(url: String, port: Int, topic: String): Unit = {
+  def subscribe(url: String, port: Int, clientID: String, topic: String): Unit = {
 
     val brokerUrl = s"tcp://$url:$port"
     val persistence = new MemoryPersistence
-    val client = new MqttClient(brokerUrl, MqttClient.generateClientId(), persistence)
+    val client = new MqttClient(brokerUrl, clientID, persistence)
     client.connect()
     println(s"connecting to $brokerUrl ...")
     client.subscribe(topic)
@@ -38,8 +38,7 @@ class SubscribeService @Inject() (cc: ControllerComponents, config: Configuratio
 
       override def messageArrived(topic: String, message: MqttMessage): Unit = {
         println(s"A message arrived: ${new String(message.getPayload)} with topic $topic")
-        TSData.addData(topic, new String(message.getPayload))
-
+//        TSData.addData(topic, new String(message.getPayload))
         //        Redirect(routes.Assets.versioned("js/test.js"))
       }
     }

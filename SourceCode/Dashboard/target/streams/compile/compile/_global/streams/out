@@ -1,9 +1,5 @@
-[error] E:\Thesis\MQTT_Broker_AkkaModel\SourceCode\Dashboard\app\controllers\HomeController.scala:45:24: not enough arguments for method apply: (message: String, clientID: String)(implicit assetsFinder: controllers.AssetsFinder): play.twirl.api.HtmlFormat.Appendable in object Form1.
-[error] Unspecified value parameter clientID.
-[error]     Ok(views.html.Form1("ok form"))
+[error] E:\Thesis\MQTT_Broker_AkkaModel\SourceCode\Dashboard\app\controllers\HomeController.scala:55:24: not enough arguments for method publish: (url: String, port: Int, clientID: String, topic: String, message: String): Boolean.
+[error] Unspecified value parameter message.
+[error]       publisher.publish(server, port, topic, payload)
 [error]                        ^
-[error] E:\Thesis\MQTT_Broker_AkkaModel\SourceCode\Dashboard\app\controllers\HomeController.scala:56:26: not enough arguments for method apply: (message: String, clientID: String)(implicit assetsFinder: controllers.AssetsFinder): play.twirl.api.HtmlFormat.Appendable in object Form1.
-[error] Unspecified value parameter clientID.
-[error]       Ok(views.html.Form1(("ok form")))
-[error]                          ^
-[error] two errors found
+[error] one error found

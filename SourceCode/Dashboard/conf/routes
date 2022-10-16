@@ -22,16 +22,16 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 
 # Funtions
-GET     /device/loadDevicePage       controllers.HomeController.loadDevicePage
+GET     /device/loadDevicePage       controllers.HomeController.loadCreateDevicePage
 GET     /device/delete/:device_code  controllers.HomeController.deleteDevice(device_code)
 
 POST    /device/create               controllers.HomeController.createDevice
-GET     /device/listDevice           controllers.HomeController.listAll
+GET     /device/listDevice           controllers.HomeController.listAllDevice
+GET     /device/edit/:device_code    controllers.HomeController.loadEditDevicePage(device_code )
 
-POST    /subscribe/getTopic          controllers.HomeController.getTopicSubscribe
-GET     /subscribe/:topic            controllers.HomeController.MQTTsubscribe(topic)
-GET     /form2                       controllers.HomeController.loadForm2
-
+#POST    /subscribe/getTopic          controllers.HomeController.getTopicSubscribe
+POST    /subscribe                   controllers.HomeController.MQTTsubscribe
+GET     /form2/:device_code          controllers.HomeController.loadForm2(device_code)
 
 POST    /publishPost                 controllers.HomeController.MQTTpublishPOST
 GET     /form1/:device_code          controllers.HomeController.loadForm1(device_code)

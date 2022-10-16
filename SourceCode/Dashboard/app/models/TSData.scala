@@ -1,13 +1,11 @@
 package models
 
-import akka.actor.Status.Success
-
-import scala.collection.mutable
-import scala.concurrent.{Await, Future}
-import scala.concurrent.duration._
+import services.MQTTServices
 import slick.jdbc.SQLiteProfile.api._
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.collection.mutable
+import scala.concurrent.Await
+import scala.concurrent.duration._
 import scala.language.postfixOps
 
 case class Device(id: Option[Int], name: String, device_code: String, description: String)
@@ -63,14 +61,16 @@ object TSData{
   private val topics = mutable.Map[String, List[String]]("device1" -> List())
   private val payloads = mutable.Map[String, List[String]]("alo" -> List())
 
+  var sessions = mutable.Map[String, MQTTServices]()
+//  var clients = List[MQTTServices]()
   def validateDevices(deviceName: String, deviceID: String): Boolean = ???
 
-  def createDevice(deviceName: String, deviceID: String): Boolean = {
-    if (devices.contains(deviceName)) {
+  def createSession(device_code: String): Boolean = {
+    if (sessions.contains(device_code)) {
       false
     } //if the device already exists
     else {
-      devices(deviceName) = deviceID
+      sessions(device_code) = new MQTTServices(device_code)
       true
     }
   }
@@ -100,6 +100,7 @@ object TSData{
     payloads.get(topic).getOrElse(Nil)
   }
 
+  //for database
   def addItem(device_name: String, device_code: String, device_description: String): Unit = {
     val query = db.run(devicesTable.filter(i => i.device_code === device_code || i.name === device_name).exists.result)
     val check = Await.result(query, 5 seconds).asInstanceOf[Boolean]
@@ -123,9 +124,9 @@ object TSData{
 
   def editItem(device_code: String, nName: String, nCode: String, nDes: String): Unit = {
     val query = devicesTable.filter(_.device_code === device_code)
-      .map(devicesTable=>(devicesTable.name, devicesTable.device_code, devicesTable.description))
-    val editDevice = query.update(nName, nCode, nDes)
-    val update = Await.result(db.run(editDevice), 10 seconds)
+      .map(devicesTable=>(devicesTable.name, devicesTable.device_code, devicesTable.description)).update(nName, nCode, nDes)
+//    val editDevice = query.update(nName, nCode, nDes)
+    val update = Await.result(db.run(query), 10 seconds)
   }
 
   def deleteItem(device_code: String): Unit = {

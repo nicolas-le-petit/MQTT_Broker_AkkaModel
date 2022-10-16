@@ -17,6 +17,16 @@ package controllers.javascript {
     }
 
   
+    // @LINE:33
+    def MQTTsubscribe: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.MQTTsubscribe",
+      """
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "subscribe"})
+        }
+      """
+    )
+  
     // @LINE:37
     def loadForm1: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.HomeController.loadForm1",
@@ -37,16 +47,6 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:29
-    def listAll: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.HomeController.listAll",
-      """
-        function() {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "device/listDevice"})
-        }
-      """
-    )
-  
     // @LINE:26
     def deleteDevice: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.HomeController.deleteDevice",
@@ -57,12 +57,12 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:31
-    def getTopicSubscribe: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.HomeController.getTopicSubscribe",
+    // @LINE:29
+    def listAllDevice: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.listAllDevice",
       """
         function() {
-          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "subscribe/getTopic"})
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "device/listDevice"})
         }
       """
     )
@@ -77,22 +77,22 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:33
-    def loadForm2: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.HomeController.loadForm2",
-      """
-        function() {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "form2"})
-        }
-      """
-    )
-  
     // @LINE:28
     def createDevice: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.HomeController.createDevice",
       """
         function() {
           return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "device/create"})
+        }
+      """
+    )
+  
+    // @LINE:34
+    def loadForm2: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.loadForm2",
+      """
+        function(device_code0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "form2/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("device_code", device_code0))})
         }
       """
     )
@@ -107,19 +107,19 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:32
-    def MQTTsubscribe: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.HomeController.MQTTsubscribe",
+    // @LINE:30
+    def loadEditDevicePage: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.loadEditDevicePage",
       """
-        function(topic0) {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "subscribe/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("topic", topic0))})
+        function(device_code0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "device/edit/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("device_code", device_code0))})
         }
       """
     )
   
     // @LINE:25
-    def loadDevicePage: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.HomeController.loadDevicePage",
+    def loadCreateDevicePage: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.loadCreateDevicePage",
       """
         function() {
           return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "device/loadDevicePage"})

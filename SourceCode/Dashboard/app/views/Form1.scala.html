@@ -8,7 +8,7 @@
         <div class="row justify-content-md-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">PUBLISH FORM</div>
+                    <div class="card-header">PUBLISH FORM @clientID</div>
                         <form id="dataForm" method="post" action="@routes.HomeController.MQTTpublishPOST">
                             <div class="form-group">
                                 <label for="">Topic</label>
@@ -20,7 +20,7 @@
                             </div>
                             <input type="hidden" name="clientID" id="clientID" value=@clientID class="form-control">
                             <div class="form-group">
-                                <button class="btn btn-primary" type="submit">Submit</button>
+                                <button class="btn btn-primary" type="submit">Publish</button>
                             </div>
                         </form>
                 </div>

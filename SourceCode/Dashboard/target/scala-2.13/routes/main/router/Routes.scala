@@ -57,13 +57,13 @@ class Routes(
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """message""", """controllers.AsyncController.message"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """assets/""" + "$" + """file<.+>""", """controllers.Assets.versioned(file:String)"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """assets/""" + "$" + """file<.+>""", """controllers.Assets.at(path:String = "/public", file:String)"""),
-    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """device/loadDevicePage""", """controllers.HomeController.loadDevicePage"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """device/loadDevicePage""", """controllers.HomeController.loadCreateDevicePage"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """device/delete/""" + "$" + """device_code<[^/]+>""", """controllers.HomeController.deleteDevice(device_code:String)"""),
     ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """device/create""", """controllers.HomeController.createDevice"""),
-    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """device/listDevice""", """controllers.HomeController.listAll"""),
-    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """subscribe/getTopic""", """controllers.HomeController.getTopicSubscribe"""),
-    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """subscribe/""" + "$" + """topic<[^/]+>""", """controllers.HomeController.MQTTsubscribe(topic:String)"""),
-    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """form2""", """controllers.HomeController.loadForm2"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """device/listDevice""", """controllers.HomeController.listAllDevice"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """device/edit/""" + "$" + """device_code<[^/]+>""", """controllers.HomeController.loadEditDevicePage(device_code:String)"""),
+    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """subscribe""", """controllers.HomeController.MQTTsubscribe"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """form2/""" + "$" + """device_code<[^/]+>""", """controllers.HomeController.loadForm2(device_code:String)"""),
     ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """publishPost""", """controllers.HomeController.MQTTpublishPOST"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """form1/""" + "$" + """device_code<[^/]+>""", """controllers.HomeController.loadForm1(device_code:String)"""),
     Nil
@@ -185,15 +185,15 @@ class Routes(
   )
 
   // @LINE:25
-  private[this] lazy val controllers_HomeController_loadDevicePage7_route = Route("GET",
+  private[this] lazy val controllers_HomeController_loadCreateDevicePage7_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("device/loadDevicePage")))
   )
-  private[this] lazy val controllers_HomeController_loadDevicePage7_invoker = createInvoker(
-    HomeController_0.loadDevicePage,
+  private[this] lazy val controllers_HomeController_loadCreateDevicePage7_invoker = createInvoker(
+    HomeController_0.loadCreateDevicePage,
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.HomeController",
-      "loadDevicePage",
+      "loadCreateDevicePage",
       Nil,
       "GET",
       this.prefix + """device/loadDevicePage""",
@@ -239,15 +239,15 @@ class Routes(
   )
 
   // @LINE:29
-  private[this] lazy val controllers_HomeController_listAll10_route = Route("GET",
+  private[this] lazy val controllers_HomeController_listAllDevice10_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("device/listDevice")))
   )
-  private[this] lazy val controllers_HomeController_listAll10_invoker = createInvoker(
-    HomeController_0.listAll,
+  private[this] lazy val controllers_HomeController_listAllDevice10_invoker = createInvoker(
+    HomeController_0.listAllDevice,
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.HomeController",
-      "listAll",
+      "listAllDevice",
       Nil,
       "GET",
       this.prefix + """device/listDevice""",
@@ -256,55 +256,55 @@ class Routes(
     )
   )
 
-  // @LINE:31
-  private[this] lazy val controllers_HomeController_getTopicSubscribe11_route = Route("POST",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("subscribe/getTopic")))
+  // @LINE:30
+  private[this] lazy val controllers_HomeController_loadEditDevicePage11_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("device/edit/"), DynamicPart("device_code", """[^/]+""",true)))
   )
-  private[this] lazy val controllers_HomeController_getTopicSubscribe11_invoker = createInvoker(
-    HomeController_0.getTopicSubscribe,
+  private[this] lazy val controllers_HomeController_loadEditDevicePage11_invoker = createInvoker(
+    HomeController_0.loadEditDevicePage(fakeValue[String]),
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.HomeController",
-      "getTopicSubscribe",
-      Nil,
-      "POST",
-      this.prefix + """subscribe/getTopic""",
-      """""",
-      Seq()
-    )
-  )
-
-  // @LINE:32
-  private[this] lazy val controllers_HomeController_MQTTsubscribe12_route = Route("GET",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("subscribe/"), DynamicPart("topic", """[^/]+""",true)))
-  )
-  private[this] lazy val controllers_HomeController_MQTTsubscribe12_invoker = createInvoker(
-    HomeController_0.MQTTsubscribe(fakeValue[String]),
-    play.api.routing.HandlerDef(this.getClass.getClassLoader,
-      "router",
-      "controllers.HomeController",
-      "MQTTsubscribe",
+      "loadEditDevicePage",
       Seq(classOf[String]),
       "GET",
-      this.prefix + """subscribe/""" + "$" + """topic<[^/]+>""",
+      this.prefix + """device/edit/""" + "$" + """device_code<[^/]+>""",
       """""",
       Seq()
     )
   )
 
   // @LINE:33
+  private[this] lazy val controllers_HomeController_MQTTsubscribe12_route = Route("POST",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("subscribe")))
+  )
+  private[this] lazy val controllers_HomeController_MQTTsubscribe12_invoker = createInvoker(
+    HomeController_0.MQTTsubscribe,
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.HomeController",
+      "MQTTsubscribe",
+      Nil,
+      "POST",
+      this.prefix + """subscribe""",
+      """POST    /subscribe/getTopic          controllers.HomeController.getTopicSubscribe""",
+      Seq()
+    )
+  )
+
+  // @LINE:34
   private[this] lazy val controllers_HomeController_loadForm213_route = Route("GET",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("form2")))
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("form2/"), DynamicPart("device_code", """[^/]+""",true)))
   )
   private[this] lazy val controllers_HomeController_loadForm213_invoker = createInvoker(
-    HomeController_0.loadForm2,
+    HomeController_0.loadForm2(fakeValue[String]),
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.HomeController",
       "loadForm2",
-      Nil,
+      Seq(classOf[String]),
       "GET",
-      this.prefix + """form2""",
+      this.prefix + """form2/""" + "$" + """device_code<[^/]+>""",
       """""",
       Seq()
     )
@@ -389,9 +389,9 @@ class Routes(
       }
   
     // @LINE:25
-    case controllers_HomeController_loadDevicePage7_route(params@_) =>
+    case controllers_HomeController_loadCreateDevicePage7_route(params@_) =>
       call { 
-        controllers_HomeController_loadDevicePage7_invoker.call(HomeController_0.loadDevicePage)
+        controllers_HomeController_loadCreateDevicePage7_invoker.call(HomeController_0.loadCreateDevicePage)
       }
   
     // @LINE:26
@@ -407,27 +407,27 @@ class Routes(
       }
   
     // @LINE:29
-    case controllers_HomeController_listAll10_route(params@_) =>
+    case controllers_HomeController_listAllDevice10_route(params@_) =>
       call { 
-        controllers_HomeController_listAll10_invoker.call(HomeController_0.listAll)
+        controllers_HomeController_listAllDevice10_invoker.call(HomeController_0.listAllDevice)
       }
   
-    // @LINE:31
-    case controllers_HomeController_getTopicSubscribe11_route(params@_) =>
-      call { 
-        controllers_HomeController_getTopicSubscribe11_invoker.call(HomeController_0.getTopicSubscribe)
-      }
-  
-    // @LINE:32
-    case controllers_HomeController_MQTTsubscribe12_route(params@_) =>
-      call(params.fromPath[String]("topic", None)) { (topic) =>
-        controllers_HomeController_MQTTsubscribe12_invoker.call(HomeController_0.MQTTsubscribe(topic))
+    // @LINE:30
+    case controllers_HomeController_loadEditDevicePage11_route(params@_) =>
+      call(params.fromPath[String]("device_code", None)) { (device_code) =>
+        controllers_HomeController_loadEditDevicePage11_invoker.call(HomeController_0.loadEditDevicePage(device_code))
       }
   
     // @LINE:33
-    case controllers_HomeController_loadForm213_route(params@_) =>
+    case controllers_HomeController_MQTTsubscribe12_route(params@_) =>
       call { 
-        controllers_HomeController_loadForm213_invoker.call(HomeController_0.loadForm2)
+        controllers_HomeController_MQTTsubscribe12_invoker.call(HomeController_0.MQTTsubscribe)
+      }
+  
+    // @LINE:34
+    case controllers_HomeController_loadForm213_route(params@_) =>
+      call(params.fromPath[String]("device_code", None)) { (device_code) =>
+        controllers_HomeController_loadForm213_invoker.call(HomeController_0.loadForm2(device_code))
       }
   
     // @LINE:36

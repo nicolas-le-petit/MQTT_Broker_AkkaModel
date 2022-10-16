@@ -15,18 +15,18 @@ import play.api.templates.PlayMagic._
 import play.api.mvc._
 import play.api.data._
 
-object createDevice extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template2[String,AssetsFinder,play.twirl.api.HtmlFormat.Appendable] {
+object editDevice extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template3[String,String,AssetsFinder,play.twirl.api.HtmlFormat.Appendable] {
 
   /*
 * This template takes a two arguments, a String containing a
 * message to display and an AssetsFinder to locate static assets.
 */
-  def apply/*8.2*/(message: String)(implicit assetsFinder: AssetsFinder):play.twirl.api.HtmlFormat.Appendable = {
+  def apply/*8.2*/(message: String, clientID: String)(implicit assetsFinder: AssetsFinder):play.twirl.api.HtmlFormat.Appendable = {
     _display_ {
       {
 
 
-Seq[Any](format.raw/*8.56*/("""
+Seq[Any](format.raw/*8.74*/("""
 
 """),format.raw/*14.3*/("""
 
@@ -41,18 +41,19 @@ Seq[Any](format.raw/*8.56*/("""
                         <form action=""""),_display_(/*24.40*/routes/*24.46*/.HomeController.createDevice),format.raw/*24.74*/("""" method="post">
                             <div class="form-group">
                                 <label for="">Device Name</label>
-                                <input type="text" name="device_name" id="device_name" placeholder="eg. Device_1" class="form-control">
+                                <input type="text" name="device_name" id="device_name" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="">Device ID</label>
-                                <input type="text" name="device_code" id="device_code" placeholder="eg. Client_1" class="form-control">
+                                <input type="text" name="device_code" id="device_code" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="">Description</label>
-                                <input type="text" name="device_description" id="device_description" placeholder="eg. This is Device_1" class="form-control">
+                                <input type="text" name="device_description" id="device_description" class="form-control">
                             </div>
+                            <input type="hidden" name="clientID_old" id="clientID_old" value="""),_display_(/*37.95*/clientID),format.raw/*37.103*/(""" """),format.raw/*37.104*/("""class="form-control">
                             <div class="form-group">
-                                <button class="btn btn-primary" type="submit">Create</button>
+                                <button class="btn btn-primary" type="submit">Save change</button>
                             </div>
                         </form>
                     </div>
@@ -62,15 +63,15 @@ Seq[Any](format.raw/*8.56*/("""
     </div>
 
 
-""")))}),format.raw/*48.2*/("""
+""")))}),format.raw/*49.2*/("""
 """))
       }
     }
   }
 
-  def render(message:String,assetsFinder:AssetsFinder): play.twirl.api.HtmlFormat.Appendable = apply(message)(assetsFinder)
+  def render(message:String,clientID:String,assetsFinder:AssetsFinder): play.twirl.api.HtmlFormat.Appendable = apply(message,clientID)(assetsFinder)
 
-  def f:((String) => (AssetsFinder) => play.twirl.api.HtmlFormat.Appendable) = (message) => (assetsFinder) => apply(message)(assetsFinder)
+  def f:((String,String) => (AssetsFinder) => play.twirl.api.HtmlFormat.Appendable) = (message,clientID) => (assetsFinder) => apply(message,clientID)(assetsFinder)
 
   def ref: this.type = this
 
@@ -79,10 +80,10 @@ Seq[Any](format.raw/*8.56*/("""
 
               /*
                   -- GENERATED --
-                  SOURCE: app/views/createDevice.scala.html
-                  HASH: bf670715b3beda3d2ccd0485da2fa629568b61d8
-                  MATRIX: 880->144|1029->198|1060->396|1091->401|1121->422|1161->424|1196->432|1527->736|1542->742|1591->770|2864->2013
-                  LINES: 24->8|29->8|31->14|33->16|33->16|33->16|35->18|41->24|41->24|41->24|65->48
+                  SOURCE: app/views/editDevice.scala.html
+                  HASH: db4b63c4e87d7cc68fe70bbbd89aae08fa93c1e1
+                  MATRIX: 885->144|1052->216|1083->414|1114->419|1144->440|1184->442|1219->450|1550->754|1565->760|1614->788|2566->1713|2596->1721|2626->1722|3007->2073
+                  LINES: 24->8|29->8|31->14|33->16|33->16|33->16|35->18|41->24|41->24|41->24|54->37|54->37|54->37|66->49
                   -- GENERATED --
               */
           

@@ -16,6 +16,12 @@ package controllers {
     }
 
   
+    // @LINE:33
+    def MQTTsubscribe: Call = {
+      
+      Call("POST", _prefix + { _defaultPrefix } + "subscribe")
+    }
+  
     // @LINE:37
     def loadForm1(device_code:String): Call = {
       
@@ -28,22 +34,16 @@ package controllers {
       Call("POST", _prefix + { _defaultPrefix } + "publishPost")
     }
   
-    // @LINE:29
-    def listAll: Call = {
-      
-      Call("GET", _prefix + { _defaultPrefix } + "device/listDevice")
-    }
-  
     // @LINE:26
     def deleteDevice(device_code:String): Call = {
       
       Call("GET", _prefix + { _defaultPrefix } + "device/delete/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("device_code", device_code)))
     }
   
-    // @LINE:31
-    def getTopicSubscribe: Call = {
+    // @LINE:29
+    def listAllDevice: Call = {
       
-      Call("POST", _prefix + { _defaultPrefix } + "subscribe/getTopic")
+      Call("GET", _prefix + { _defaultPrefix } + "device/listDevice")
     }
   
     // @LINE:9
@@ -52,16 +52,16 @@ package controllers {
       Call("GET", _prefix + { _defaultPrefix } + "welcome")
     }
   
-    // @LINE:33
-    def loadForm2: Call = {
-      
-      Call("GET", _prefix + { _defaultPrefix } + "form2")
-    }
-  
     // @LINE:28
     def createDevice: Call = {
       
       Call("POST", _prefix + { _defaultPrefix } + "device/create")
+    }
+  
+    // @LINE:34
+    def loadForm2(device_code:String): Call = {
+      
+      Call("GET", _prefix + { _defaultPrefix } + "form2/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("device_code", device_code)))
     }
   
     // @LINE:8
@@ -70,14 +70,14 @@ package controllers {
       Call("GET", _prefix)
     }
   
-    // @LINE:32
-    def MQTTsubscribe(topic:String): Call = {
+    // @LINE:30
+    def loadEditDevicePage(device_code:String): Call = {
       
-      Call("GET", _prefix + { _defaultPrefix } + "subscribe/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("topic", topic)))
+      Call("GET", _prefix + { _defaultPrefix } + "device/edit/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("device_code", device_code)))
     }
   
     // @LINE:25
-    def loadDevicePage: Call = {
+    def loadCreateDevicePage: Call = {
       
       Call("GET", _prefix + { _defaultPrefix } + "device/loadDevicePage")
     }
