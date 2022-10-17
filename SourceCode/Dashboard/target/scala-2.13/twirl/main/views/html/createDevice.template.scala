@@ -36,7 +36,7 @@ Seq[Any](format.raw/*8.56*/("""
         <div class="row justify-content-md-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Create new device</div>
+                    <div class="card-header">CREATE NEW DEVICE</div>
                     <div class="card-body">
                         <form action=""""),_display_(/*24.40*/routes/*24.46*/.HomeController.createDevice),format.raw/*24.74*/("""" method="post">
                             <div class="form-group">
@@ -80,7 +80,7 @@ Seq[Any](format.raw/*8.56*/("""
               /*
                   -- GENERATED --
                   SOURCE: app/views/createDevice.scala.html
-                  HASH: bf670715b3beda3d2ccd0485da2fa629568b61d8
+                  HASH: b80d703c98ee6745ef7a3e363ab9cb2ea8d2482a
                   MATRIX: 880->144|1029->198|1060->396|1091->401|1121->422|1161->424|1196->432|1527->736|1542->742|1591->770|2864->2013
                   LINES: 24->8|29->8|31->14|33->16|33->16|33->16|35->18|41->24|41->24|41->24|65->48
                   -- GENERATED --

@@ -26,19 +26,18 @@ object Form2 extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.Html
 Seq[Any](format.raw/*1.99*/("""
 
 """),_display_(/*3.2*/main("Form2")/*3.15*/{_display_(Seq[Any](format.raw/*3.16*/("""
-
-            """),format.raw/*6.35*/("""
-            """),format.raw/*7.13*/("""<div class="container">
+            """),format.raw/*5.35*/("""
+            """),format.raw/*6.13*/("""<div class="container">
                 <div class="row justify-content-md-center">
                     <ul class="col-md-8">
                         <ul class="card">
-                            <div class="card-header">SUBSCRIBE FORM """),_display_(/*11.70*/clientID),format.raw/*11.78*/("""</div>
-                            <form id="dataForm" method="post" action=""""),_display_(/*12.72*/routes/*12.78*/.HomeController.MQTTsubscribe),format.raw/*12.107*/("""">
+                            <div class="card-header">SUBSCRIBE FORM """),_display_(/*10.70*/clientID),format.raw/*10.78*/("""</div>
+                            <form id="dataForm" method="post" action=""""),_display_(/*11.72*/routes/*11.78*/.HomeController.MQTTsubscribe),format.raw/*11.107*/("""">
                                 <div class="form-group">
                                     <label for="">Subscibe to Topic</label>
                                     <input type="text" name="subTopic" id="subTopic" class="form-control">
                                 </div>
-                                <input type="hidden" name="clientID" id="clientID" value="""),_display_(/*17.91*/clientID),format.raw/*17.99*/(""" """),format.raw/*17.100*/("""class="form-control">
+                                <input type="hidden" name="clientID" id="clientID" value="""),_display_(/*16.91*/clientID),format.raw/*16.99*/(""" """),format.raw/*16.100*/("""class="form-control">
                                 <div class="form-group">
                                     <button class="btn btn-primary" type="submit">Subscribe</button>
                                 </div>
@@ -46,26 +45,26 @@ Seq[Any](format.raw/*1.99*/("""
                             <div id="test">
 
                             </div>
-"""),format.raw/*25.58*/("""
-"""),format.raw/*26.99*/("""
-"""),format.raw/*27.56*/("""
-"""),format.raw/*28.45*/("""
-"""),format.raw/*29.70*/("""
-"""),format.raw/*30.62*/("""
-"""),format.raw/*31.42*/("""
-"""),format.raw/*32.46*/("""
-"""),format.raw/*33.43*/("""
-"""),format.raw/*34.34*/("""
-                        """),format.raw/*35.25*/("""</ul>
+"""),format.raw/*24.58*/("""
+"""),format.raw/*25.99*/("""
+"""),format.raw/*26.56*/("""
+"""),format.raw/*27.45*/("""
+"""),format.raw/*28.70*/("""
+"""),format.raw/*29.62*/("""
+"""),format.raw/*30.42*/("""
+"""),format.raw/*31.46*/("""
+"""),format.raw/*32.43*/("""
+"""),format.raw/*33.34*/("""
+                        """),format.raw/*34.25*/("""</ul>
                     </ul>
                 </div>
             </div>
         </div>
         </div>
         </div>
-"""),format.raw/*42.65*/("""
+"""),format.raw/*41.65*/("""
 
-""")))}),format.raw/*44.2*/("""
+""")))}),format.raw/*43.2*/("""
 
 """))
       }
@@ -84,9 +83,9 @@ Seq[Any](format.raw/*1.99*/("""
               /*
                   -- GENERATED --
                   SOURCE: app/views/Form2.scala.html
-                  HASH: e62f79c0c87e0f6ff8c36bd982ba00be6b4df7b7
-                  MATRIX: 763->1|955->98|985->103|1006->116|1044->117|1087->227|1128->241|1396->482|1425->490|1531->569|1546->575|1597->604|2001->981|2030->989|2060->990|2431->1390|2461->1490|2491->1547|2521->1593|2551->1664|2581->1727|2611->1770|2641->1817|2671->1861|2701->1896|2755->1922|2909->2112|2944->2117
-                  LINES: 21->1|26->1|28->3|28->3|28->3|30->6|31->7|35->11|35->11|36->12|36->12|36->12|41->17|41->17|41->17|49->25|50->26|51->27|52->28|53->29|54->30|55->31|56->32|57->33|58->34|59->35|66->42|68->44
+                  HASH: c85c4af4253dc95ce5d2d5fdada3dfb96a8346e9
+                  MATRIX: 763->1|955->98|985->103|1006->116|1044->117|1085->225|1126->239|1394->480|1423->488|1529->567|1544->573|1595->602|1999->979|2028->987|2058->988|2429->1388|2459->1488|2489->1545|2519->1591|2549->1662|2579->1725|2609->1768|2639->1815|2669->1859|2699->1894|2753->1920|2907->2110|2942->2115
+                  LINES: 21->1|26->1|28->3|28->3|28->3|29->5|30->6|34->10|34->10|35->11|35->11|35->11|40->16|40->16|40->16|48->24|49->25|50->26|51->27|52->28|53->29|54->30|55->31|56->32|57->33|58->34|65->41|67->43
                   -- GENERATED --
               */
           
