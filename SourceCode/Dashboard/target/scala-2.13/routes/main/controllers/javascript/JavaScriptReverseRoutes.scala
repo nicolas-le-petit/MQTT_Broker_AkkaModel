@@ -27,22 +27,22 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:37
-    def loadForm1: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.HomeController.loadForm1",
-      """
-        function(device_code0) {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "form1/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("device_code", device_code0))})
-        }
-      """
-    )
-  
-    // @LINE:36
+    // @LINE:34
     def MQTTpublishPOST: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.HomeController.MQTTpublishPOST",
       """
         function() {
           return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "publishPost"})
+        }
+      """
+    )
+  
+    // @LINE:36
+    def updatePayload: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.updatePayload",
+      """
+        function(device_code0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "form/update/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("device_code", device_code0))})
         }
       """
     )
@@ -87,16 +87,6 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:34
-    def loadForm2: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.HomeController.loadForm2",
-      """
-        function(device_code0) {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "form2/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("device_code", device_code0))})
-        }
-      """
-    )
-  
     // @LINE:8
     def index: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.HomeController.index",
@@ -123,6 +113,16 @@ package controllers.javascript {
       """
         function() {
           return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "device/loadDevicePage"})
+        }
+      """
+    )
+  
+    // @LINE:35
+    def loadForm: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.loadForm",
+      """
+        function(device_code0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "form/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("device_code", device_code0))})
         }
       """
     )

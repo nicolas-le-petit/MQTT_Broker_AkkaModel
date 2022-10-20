@@ -37,7 +37,15 @@ Seq[Any](format.raw/*1.99*/("""
                                     <label for="">Subscibe to Topic</label>
                                     <input type="text" name="subTopic" id="subTopic" class="form-control">
                                 </div>
-                                <input type="hidden" name="clientID" id="clientID" value="""),_display_(/*16.91*/clientID),format.raw/*16.99*/(""" """),format.raw/*16.100*/("""class="form-control">
+                                <div>
+                                    <label for="">QoS</label>
+                                    <select name="qos" id="qos">
+                                        <option value=0>0</option>
+                                        <option value=1>1</option>
+                                        <option value=2>2</option>
+                                    </select>
+                                </div>
+                                <input type="hidden" name="clientID" id="clientID" value="""),_display_(/*24.91*/clientID),format.raw/*24.99*/(""" """),format.raw/*24.100*/("""class="form-control">
                                 <div class="form-group">
                                     <button class="btn btn-primary" type="submit">Subscribe</button>
                                 </div>
@@ -45,26 +53,26 @@ Seq[Any](format.raw/*1.99*/("""
                             <div id="test">
 
                             </div>
-"""),format.raw/*24.58*/("""
-"""),format.raw/*25.99*/("""
-"""),format.raw/*26.56*/("""
-"""),format.raw/*27.45*/("""
-"""),format.raw/*28.70*/("""
-"""),format.raw/*29.62*/("""
-"""),format.raw/*30.42*/("""
-"""),format.raw/*31.46*/("""
-"""),format.raw/*32.43*/("""
-"""),format.raw/*33.34*/("""
-                        """),format.raw/*34.25*/("""</ul>
+"""),format.raw/*32.58*/("""
+"""),format.raw/*33.99*/("""
+"""),format.raw/*34.56*/("""
+"""),format.raw/*35.45*/("""
+"""),format.raw/*36.70*/("""
+"""),format.raw/*37.62*/("""
+"""),format.raw/*38.42*/("""
+"""),format.raw/*39.46*/("""
+"""),format.raw/*40.43*/("""
+"""),format.raw/*41.34*/("""
+                        """),format.raw/*42.25*/("""</ul>
                     </ul>
                 </div>
             </div>
         </div>
         </div>
         </div>
-"""),format.raw/*41.65*/("""
+"""),format.raw/*49.65*/("""
 
-""")))}),format.raw/*43.2*/("""
+""")))}),format.raw/*51.2*/("""
 
 """))
       }
@@ -83,9 +91,9 @@ Seq[Any](format.raw/*1.99*/("""
               /*
                   -- GENERATED --
                   SOURCE: app/views/Form2.scala.html
-                  HASH: c85c4af4253dc95ce5d2d5fdada3dfb96a8346e9
-                  MATRIX: 763->1|955->98|985->103|1006->116|1044->117|1085->225|1126->239|1394->480|1423->488|1529->567|1544->573|1595->602|1999->979|2028->987|2058->988|2429->1388|2459->1488|2489->1545|2519->1591|2549->1662|2579->1725|2609->1768|2639->1815|2669->1859|2699->1894|2753->1920|2907->2110|2942->2115
-                  LINES: 21->1|26->1|28->3|28->3|28->3|29->5|30->6|34->10|34->10|35->11|35->11|35->11|40->16|40->16|40->16|48->24|49->25|50->26|51->27|52->28|53->29|54->30|55->31|56->32|57->33|58->34|65->41|67->43
+                  HASH: 9179a081da9e77726ac26aa4504d73f7fa239e3f
+                  MATRIX: 763->1|955->98|985->103|1006->116|1044->117|1085->225|1126->239|1394->480|1423->488|1529->567|1544->573|1595->602|2458->1438|2487->1446|2517->1447|2888->1847|2918->1947|2948->2004|2978->2050|3008->2121|3038->2184|3068->2227|3098->2274|3128->2318|3158->2353|3212->2379|3366->2569|3401->2574
+                  LINES: 21->1|26->1|28->3|28->3|28->3|29->5|30->6|34->10|34->10|35->11|35->11|35->11|48->24|48->24|48->24|56->32|57->33|58->34|59->35|60->36|61->37|62->38|63->39|64->40|65->41|66->42|73->49|75->51
                   -- GENERATED --
               */
           

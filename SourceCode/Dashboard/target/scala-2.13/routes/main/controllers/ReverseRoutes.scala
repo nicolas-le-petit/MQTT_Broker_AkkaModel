@@ -22,16 +22,16 @@ package controllers {
       Call("POST", _prefix + { _defaultPrefix } + "subscribe")
     }
   
-    // @LINE:37
-    def loadForm1(device_code:String): Call = {
-      
-      Call("GET", _prefix + { _defaultPrefix } + "form1/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("device_code", device_code)))
-    }
-  
-    // @LINE:36
+    // @LINE:34
     def MQTTpublishPOST: Call = {
       
       Call("POST", _prefix + { _defaultPrefix } + "publishPost")
+    }
+  
+    // @LINE:36
+    def updatePayload(device_code:String): Call = {
+      
+      Call("GET", _prefix + { _defaultPrefix } + "form/update/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("device_code", device_code)))
     }
   
     // @LINE:26
@@ -58,12 +58,6 @@ package controllers {
       Call("POST", _prefix + { _defaultPrefix } + "device/create")
     }
   
-    // @LINE:34
-    def loadForm2(device_code:String): Call = {
-      
-      Call("GET", _prefix + { _defaultPrefix } + "form2/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("device_code", device_code)))
-    }
-  
     // @LINE:8
     def index: Call = {
       
@@ -80,6 +74,12 @@ package controllers {
     def loadCreateDevicePage: Call = {
       
       Call("GET", _prefix + { _defaultPrefix } + "device/loadDevicePage")
+    }
+  
+    // @LINE:35
+    def loadForm(device_code:String): Call = {
+      
+      Call("GET", _prefix + { _defaultPrefix } + "form/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("device_code", device_code)))
     }
   
   }

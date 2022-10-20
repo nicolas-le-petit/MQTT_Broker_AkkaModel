@@ -13,12 +13,13 @@
         @* Here's where we render the page title `String`. *@
         <title>@title</title>
         <link rel="stylesheet" href="@assetsFinder.path("css/bootstrap.css")">
+        <script src="@assetsFinder.path("js/jquery-3.6.1.min.js")"></script>
+        <script src="@assetsFinder.path("js/bootstrap.min.js")"></script>
     </head>
     <body>
         @* And here's where we render the `Html` object containing
          * the page content. *@
         @content
-            <script src="@assetsFinder.path("js/jquery-3.6.1.min.js")"></script>
-            <script src="@assetsFinder.path("js/bootstrap.min.js")"></script>
+
     </body>
 </html>

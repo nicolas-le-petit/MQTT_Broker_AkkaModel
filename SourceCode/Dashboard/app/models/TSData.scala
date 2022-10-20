@@ -1,5 +1,6 @@
 package models
 
+import play.api.libs.json._
 import services.MQTTServices
 import slick.jdbc.SQLiteProfile.api._
 
@@ -45,6 +46,12 @@ class DeviceItem(val _id: Option[Int], val _name: String, val _code: String, val
   var des: String = _des
 }
 
+class PayloadItem(val _clientID: String, val _topic: String, val _payload: String) {
+  var clientID: String = _clientID
+  var topic: String = _topic
+  var payload: String = _payload
+}
+case class data(clientID: String, topic: String, payload: String)
 object TSData{
   val devicesTable = TableQuery[Devices]
   val topicsTable = TableQuery[Topics]
@@ -52,18 +59,7 @@ object TSData{
 
   val db = Database.forConfig("dbSqlite.db")
 
-  var devicesCodeList = List[String]("")
-  var devicesDesList = List[String]("")
-  var devicesNameList = List[String]("")
-
-  private val devices = mutable.Map[String, String]("device1" -> "client1")
-  private val complex = mutable.Map[String, List[List[String]]]("device1" -> List(List()))
-  private val topics = mutable.Map[String, List[String]]("device1" -> List())
-  private val payloads = mutable.Map[String, List[String]]("alo" -> List())
-
   var sessions = mutable.Map[String, MQTTServices]()
-//  var clients = List[MQTTServices]()
-  def validateDevices(deviceName: String, deviceID: String): Boolean = ???
 
   def createSession(device_code: String): Boolean = {
     if (sessions.contains(device_code)) {
@@ -73,31 +69,6 @@ object TSData{
       sessions(device_code) = new MQTTServices(device_code)
       true
     }
-  }
-
-  def getTopicList(deviceName: String): Seq[String] = {
-    topics.get(deviceName).getOrElse(Nil)
-  }
-
-  def addTopic(deviceName: String, topic: String): Boolean = {
-    if (topics(deviceName).contains(topic)) {
-      println(s"opps!")
-      false
-    } //if the topic already exists
-    else {
-      topics(deviceName) = topic :: topics.get(deviceName).getOrElse(Nil)
-      true
-    }
-  }
-
-  def addData(topic: String, data: String): Unit = {
-    payloads(topic) = data :: topics.get(topic).getOrElse(Nil)
-    println(s"topic $topic now contains: " + topics(topic))
-  }
-
-  def getData(topic: String): Seq[String] = {
-    println(s"get data: " + payloads.get(topic).getOrElse(Nil))
-    payloads.get(topic).getOrElse(Nil)
   }
 
   //for database

@@ -63,9 +63,9 @@ class Routes(
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """device/listDevice""", """controllers.HomeController.listAllDevice"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """device/edit/""" + "$" + """device_code<[^/]+>""", """controllers.HomeController.loadEditDevicePage(device_code:String)"""),
     ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """subscribe""", """controllers.HomeController.MQTTsubscribe"""),
-    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """form2/""" + "$" + """device_code<[^/]+>""", """controllers.HomeController.loadForm2(device_code:String)"""),
     ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """publishPost""", """controllers.HomeController.MQTTpublishPOST"""),
-    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """form1/""" + "$" + """device_code<[^/]+>""", """controllers.HomeController.loadForm1(device_code:String)"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """form/""" + "$" + """device_code<[^/]+>""", """controllers.HomeController.loadForm(device_code:String)"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """form/update/""" + "$" + """device_code<[^/]+>""", """controllers.HomeController.updatePayload(device_code:String)"""),
     Nil
   ).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
     case r @ (_,_,_) => s :+ r.asInstanceOf[(String,String,String)]
@@ -293,28 +293,10 @@ class Routes(
   )
 
   // @LINE:34
-  private[this] lazy val controllers_HomeController_loadForm213_route = Route("GET",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("form2/"), DynamicPart("device_code", """[^/]+""",true)))
-  )
-  private[this] lazy val controllers_HomeController_loadForm213_invoker = createInvoker(
-    HomeController_0.loadForm2(fakeValue[String]),
-    play.api.routing.HandlerDef(this.getClass.getClassLoader,
-      "router",
-      "controllers.HomeController",
-      "loadForm2",
-      Seq(classOf[String]),
-      "GET",
-      this.prefix + """form2/""" + "$" + """device_code<[^/]+>""",
-      """""",
-      Seq()
-    )
-  )
-
-  // @LINE:36
-  private[this] lazy val controllers_HomeController_MQTTpublishPOST14_route = Route("POST",
+  private[this] lazy val controllers_HomeController_MQTTpublishPOST13_route = Route("POST",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("publishPost")))
   )
-  private[this] lazy val controllers_HomeController_MQTTpublishPOST14_invoker = createInvoker(
+  private[this] lazy val controllers_HomeController_MQTTpublishPOST13_invoker = createInvoker(
     HomeController_0.MQTTpublishPOST,
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
@@ -328,19 +310,37 @@ class Routes(
     )
   )
 
-  // @LINE:37
-  private[this] lazy val controllers_HomeController_loadForm115_route = Route("GET",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("form1/"), DynamicPart("device_code", """[^/]+""",true)))
+  // @LINE:35
+  private[this] lazy val controllers_HomeController_loadForm14_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("form/"), DynamicPart("device_code", """[^/]+""",true)))
   )
-  private[this] lazy val controllers_HomeController_loadForm115_invoker = createInvoker(
-    HomeController_0.loadForm1(fakeValue[String]),
+  private[this] lazy val controllers_HomeController_loadForm14_invoker = createInvoker(
+    HomeController_0.loadForm(fakeValue[String]),
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.HomeController",
-      "loadForm1",
+      "loadForm",
       Seq(classOf[String]),
       "GET",
-      this.prefix + """form1/""" + "$" + """device_code<[^/]+>""",
+      this.prefix + """form/""" + "$" + """device_code<[^/]+>""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:36
+  private[this] lazy val controllers_HomeController_updatePayload15_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("form/update/"), DynamicPart("device_code", """[^/]+""",true)))
+  )
+  private[this] lazy val controllers_HomeController_updatePayload15_invoker = createInvoker(
+    HomeController_0.updatePayload(fakeValue[String]),
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.HomeController",
+      "updatePayload",
+      Seq(classOf[String]),
+      "GET",
+      this.prefix + """form/update/""" + "$" + """device_code<[^/]+>""",
       """""",
       Seq()
     )
@@ -425,21 +425,21 @@ class Routes(
       }
   
     // @LINE:34
-    case controllers_HomeController_loadForm213_route(params@_) =>
+    case controllers_HomeController_MQTTpublishPOST13_route(params@_) =>
+      call { 
+        controllers_HomeController_MQTTpublishPOST13_invoker.call(HomeController_0.MQTTpublishPOST)
+      }
+  
+    // @LINE:35
+    case controllers_HomeController_loadForm14_route(params@_) =>
       call(params.fromPath[String]("device_code", None)) { (device_code) =>
-        controllers_HomeController_loadForm213_invoker.call(HomeController_0.loadForm2(device_code))
+        controllers_HomeController_loadForm14_invoker.call(HomeController_0.loadForm(device_code))
       }
   
     // @LINE:36
-    case controllers_HomeController_MQTTpublishPOST14_route(params@_) =>
-      call { 
-        controllers_HomeController_MQTTpublishPOST14_invoker.call(HomeController_0.MQTTpublishPOST)
-      }
-  
-    // @LINE:37
-    case controllers_HomeController_loadForm115_route(params@_) =>
+    case controllers_HomeController_updatePayload15_route(params@_) =>
       call(params.fromPath[String]("device_code", None)) { (device_code) =>
-        controllers_HomeController_loadForm115_invoker.call(HomeController_0.loadForm1(device_code))
+        controllers_HomeController_updatePayload15_invoker.call(HomeController_0.updatePayload(device_code))
       }
   }
 }

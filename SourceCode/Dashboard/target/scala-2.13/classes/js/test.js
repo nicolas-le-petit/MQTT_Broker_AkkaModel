@@ -1,4 +1,9 @@
-console.log("hello")
+$.getJSON("url", {
+        device: deviceID,
 
-let testEl = document.getElementById("test")
-testEl.innerText = "abcd"
+    }
+    ,
+    function (data, textStatus, jqXHR) {
+
+    }
+);

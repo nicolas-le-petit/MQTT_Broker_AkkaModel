@@ -34,6 +34,10 @@ Seq[Any](format.raw/*4.74*/("""
                 <div class="card">
                     <div class="card-header">PUBLISH FORM """),_display_(/*11.60*/clientID),format.raw/*11.68*/("""</div>
                         <form id="dataForm" method="post" action=""""),_display_(/*12.68*/routes/*12.74*/.HomeController.MQTTpublishPOST),format.raw/*12.105*/("""">
+                            <div>
+                                <label for="retain">Retained Flag</label>
+                                <input type="checkbox" id="retain_flag" name="retain_flag" value=true>
+                            </div>
                             <div class="form-group">
                                 <label for="">Topic</label>
                                 <input type="text" name="topic" id="topic" class="form-control">
@@ -42,7 +46,16 @@ Seq[Any](format.raw/*4.74*/("""
                                 <label for="">Payload</label>
                                 <input type="text" name="payload" id="payload" class="form-control">
                             </div>
-                            <input type="hidden" name="clientID" id="clientID" value="""),_display_(/*21.87*/clientID),format.raw/*21.95*/(""" """),format.raw/*21.96*/("""class="form-control">
+                            <div>
+                                <label for="">QoS</label>
+                                <select name="qos" id="qos">
+                                    <option value=0>0</option>
+                                    <option value=1>1</option>
+                                    <option value=2>2</option>
+                                </select>
+                            </div>
+
+                            <input type="hidden" name="clientID" id="clientID" value="""),_display_(/*34.87*/clientID),format.raw/*34.95*/(""" """),format.raw/*34.96*/("""class="form-control">
                             <div class="form-group">
                                 <button class="btn btn-primary" type="submit">Publish</button>
                             </div>
@@ -52,7 +65,7 @@ Seq[Any](format.raw/*4.74*/("""
         </div>
     </div>
     </div>
-""")))}),format.raw/*31.2*/("""
+""")))}),format.raw/*44.2*/("""
 """))
       }
     }
@@ -70,9 +83,9 @@ Seq[Any](format.raw/*4.74*/("""
               /*
                   -- GENERATED --
                   SOURCE: app/views/Form1.scala.html
-                  HASH: 67362074401b48d0c8a967e229fd2872b924d312
-                  MATRIX: 826->84|993->156|1021->159|1042->172|1080->173|1114->181|1350->390|1379->398|1481->473|1496->479|1549->510|2170->1104|2199->1112|2228->1113|2585->1440
-                  LINES: 23->4|28->4|29->5|29->5|29->5|31->7|35->11|35->11|36->12|36->12|36->12|45->21|45->21|45->21|55->31
+                  HASH: 8002b5fc28c26c9b3928a7660d5ddecfa6873d66
+                  MATRIX: 826->84|993->156|1021->159|1042->172|1080->173|1114->181|1350->390|1379->398|1481->473|1496->479|1549->510|2849->1783|2878->1791|2907->1792|3264->2119
+                  LINES: 23->4|28->4|29->5|29->5|29->5|31->7|35->11|35->11|36->12|36->12|36->12|58->34|58->34|58->34|68->44
                   -- GENERATED --
               */
           

@@ -13,6 +13,14 @@
                                     <label for="">Subscibe to Topic</label>
                                     <input type="text" name="subTopic" id="subTopic" class="form-control">
                                 </div>
+                                <div>
+                                    <label for="">QoS</label>
+                                    <select name="qos" id="qos">
+                                        <option value=0>0</option>
+                                        <option value=1>1</option>
+                                        <option value=2>2</option>
+                                    </select>
+                                </div>
                                 <input type="hidden" name="clientID" id="clientID" value=@clientID class="form-control">
                                 <div class="form-group">
                                     <button class="btn btn-primary" type="submit">Subscribe</button>

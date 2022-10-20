@@ -16,12 +16,13 @@
  * argument is an `Html` object containing the body of the page.
  *@
 
-@main("Welcome to Play") {
-    <title> MQTT DASH BOARD</title>
+@main("MQTT Dashboard") {
+    <title>MQTT DASH BOARD</title>
     <div class="container">
+        <h1>MQTT WEB CLIENT</h1>
         <div class="row">
             <div class="col-md-12">
-                <a href="http://localhost:9000/device/create" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">+ New Device</a>
+                <a href="http://localhost:9000/device/loadDevicePage" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">+ New Device</a>
             </div>
         </div>
         <div class="row">
@@ -44,9 +45,10 @@
                                 <td>@device.code</td>
                                 <td>@device.des</td>
                                 <td>
-                                    <a href="http://localhost:9000/form1?device=@device.code" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">Publish</a>
-                                    <a href="http://localhost:9000/form2?device=@device.code" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">Subscribe</a>
-                                    <a href="" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="http://localhost:9000/form/@device.code" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">Explore</a>
+@*                                    <a href="http://localhost:9000/form1/@device.code" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">Publish</a>*@
+@*                                    <a href="http://localhost:9000/form2/@device.code" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">Subscribe</a>*@
+                                    <a href="http://localhost:9000/device/edit/@device.code" class="btn btn-sm btn-warning">Edit</a>
                                     <a href="http://localhost:9000/device/delete/@device.code" class="btn btn-sm btn-danger">Delete</a>
                                 </td>
                         </tr>

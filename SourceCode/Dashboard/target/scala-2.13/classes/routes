@@ -31,10 +31,7 @@ GET     /device/edit/:device_code    controllers.HomeController.loadEditDevicePa
 
 #POST    /subscribe/getTopic          controllers.HomeController.getTopicSubscribe
 POST    /subscribe                   controllers.HomeController.MQTTsubscribe
-GET     /form2/:device_code          controllers.HomeController.loadForm2(device_code)
-
 POST    /publishPost                 controllers.HomeController.MQTTpublishPOST
-GET     /form1/:device_code          controllers.HomeController.loadForm1(device_code)
-# Test
-#GET     /addData                     controllers.HomeController.addData
+GET     /form/:device_code           controllers.HomeController.loadForm(device_code)
+GET     /form/update/:device_code    controllers.HomeController.updatePayload(device_code)
 

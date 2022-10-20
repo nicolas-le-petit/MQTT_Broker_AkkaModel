@@ -75,13 +75,6 @@
                         <h4>Data response:</h4>
                         <div id="result" class="table-responsive">
                             <table class="table table-hover table-borded">
-                                <thead class="bg-primary">
-                                    <tr class="text-white">
-                                        <th>Topic</th>
-                                        <th>Payload</th>
-                                        <th>Time</th>
-                                    </tr>
-                                </thead>
                                 <tbody>
                                 </tbody>
                             </table>
@@ -92,32 +85,25 @@
             <script>
                 $('#publishForm').submit(function(e){
                     e.preventDefault();
-                    toastr.warning('Publish ...');
                     console.log('publishForm');
                     $.ajax({
                         type: "POST",
                         url: $(this).attr('action'),
                         data: $(this).serialize(),
                         success: function (response) {
-                            toastr.success('Publish Success');
-                            //console.log(response)
-                            $('#pubTopic').val('');
-                            $('#pubPayload').val('');
+                            console.log(response);
                         }
                     });
                 });
                 $('#subscribeForm').submit(function(e){
                     e.preventDefault();
-                    toastr.warning('Subscribe ...');
                     console.log('subscribeForm');
                     $.ajax({
                         type: "POST",
                         url: $(this).attr('action'),
                         data: $(this).serialize(),
                         success: function (response) {
-                            toastr.success('Subscribe Success');
-                            //console.log(response);
-                            $('#subTopic').val('');
+                            console.log(response);
                         }
                     });
                 });
@@ -130,12 +116,10 @@
                             },
                             dataType: "text",
                             success: function (response) {
-                                let resArr = response.split("\n");
+                                console.log(response);
                                 $("#result").find('tbody').append(`
                                     <tr>
-                                        <td>${resArr[0] != undefined ? resArr[0] : ''}</td>
-                                        <td>${resArr[1] != undefined ? resArr[1] : ''}</td>
-                                        <td>${resArr[2] != undefined ? resArr[2] : ''}</td>
+                                        <td>${response}</td>
                                     </tr>
                                 `);
                             }

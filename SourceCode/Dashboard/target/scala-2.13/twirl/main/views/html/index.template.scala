@@ -30,7 +30,7 @@ object index extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.Html
 Seq[Any](format.raw/*12.1*/("""
 """),format.raw/*17.4*/("""
 
-"""),_display_(/*19.2*/main("Welcome to Play")/*19.25*/ {_display_(Seq[Any](format.raw/*19.27*/("""
+"""),_display_(/*19.2*/main("MQTT Dashboard")/*19.24*/ {_display_(Seq[Any](format.raw/*19.26*/("""
     """),format.raw/*20.5*/("""<title>MQTT DASH BOARD</title>
     <div class="container">
         <h1>MQTT WEB CLIENT</h1>
@@ -59,21 +59,22 @@ Seq[Any](format.raw/*12.1*/("""
                                 <td>"""),_display_(/*45.38*/device/*45.44*/.code),format.raw/*45.49*/("""</td>
                                 <td>"""),_display_(/*46.38*/device/*46.44*/.des),format.raw/*46.48*/("""</td>
                                 <td>
-                                    <a href="http://localhost:9000/form1/"""),_display_(/*48.75*/device/*48.81*/.code),format.raw/*48.86*/("""" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">Publish</a>
-                                    <a href="http://localhost:9000/form2/"""),_display_(/*49.75*/device/*49.81*/.code),format.raw/*49.86*/("""" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">Subscribe</a>
-                                    <a href="http://localhost:9000/device/edit/"""),_display_(/*50.81*/device/*50.87*/.code),format.raw/*50.92*/("""" class="btn btn-sm btn-warning">Edit</a>
-                                    <a href="http://localhost:9000/device/delete/"""),_display_(/*51.83*/device/*51.89*/.code),format.raw/*51.94*/("""" class="btn btn-sm btn-danger">Delete</a>
+                                    <a href="http://localhost:9000/form/"""),_display_(/*48.74*/device/*48.80*/.code),format.raw/*48.85*/("""" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">Explore</a>
+"""),format.raw/*49.176*/("""
+"""),format.raw/*50.178*/("""
+                                    """),format.raw/*51.37*/("""<a href="http://localhost:9000/device/edit/"""),_display_(/*51.81*/device/*51.87*/.code),format.raw/*51.92*/("""" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="http://localhost:9000/device/delete/"""),_display_(/*52.83*/device/*52.89*/.code),format.raw/*52.94*/("""" class="btn btn-sm btn-danger">Delete</a>
                                 </td>
                         </tr>
-                        """)))}),format.raw/*54.26*/("""
-                    """),format.raw/*55.21*/("""</tbody>
+                        """)))}),format.raw/*55.26*/("""
+                    """),format.raw/*56.21*/("""</tbody>
                 </table>
             </div>
         </div>
     </div>
 
 
-""")))}),format.raw/*62.2*/("""
+""")))}),format.raw/*63.2*/("""
 """))
       }
     }
@@ -91,9 +92,9 @@ Seq[Any](format.raw/*12.1*/("""
               /*
                   -- GENERATED --
                   SOURCE: app/views/index.scala.html
-                  HASH: 20a0ed98caaa8a4788d9076e2c1e159758877a81
-                  MATRIX: 977->360|1157->446|1185->641|1214->644|1246->667|1286->669|1318->674|2204->1533|2246->1559|2286->1561|2339->1586|2408->1628|2423->1634|2447->1637|2517->1680|2532->1686|2558->1691|2628->1734|2643->1740|2669->1745|2739->1788|2754->1794|2779->1798|2923->1915|2938->1921|2964->1926|3152->2087|3167->2093|3193->2098|3389->2267|3404->2273|3430->2278|3581->2402|3596->2408|3622->2413|3789->2549|3838->2570|3950->2652
-                  LINES: 25->11|30->12|31->17|33->19|33->19|33->19|34->20|55->41|55->41|55->41|56->42|57->43|57->43|57->43|58->44|58->44|58->44|59->45|59->45|59->45|60->46|60->46|60->46|62->48|62->48|62->48|63->49|63->49|63->49|64->50|64->50|64->50|65->51|65->51|65->51|68->54|69->55|76->62
+                  HASH: d96aed7cd01a2829d6922e2a4c0e78b8bd191fa5
+                  MATRIX: 977->360|1157->446|1185->641|1214->644|1245->666|1285->668|1317->673|2203->1532|2245->1558|2285->1560|2338->1585|2407->1627|2422->1633|2446->1636|2516->1679|2531->1685|2557->1690|2627->1733|2642->1739|2668->1744|2738->1787|2753->1793|2778->1797|2921->1913|2936->1919|2962->1924|3078->2186|3108->2364|3173->2401|3244->2445|3259->2451|3285->2456|3436->2580|3451->2586|3477->2591|3644->2727|3693->2748|3805->2830
+                  LINES: 25->11|30->12|31->17|33->19|33->19|33->19|34->20|55->41|55->41|55->41|56->42|57->43|57->43|57->43|58->44|58->44|58->44|59->45|59->45|59->45|60->46|60->46|60->46|62->48|62->48|62->48|63->49|64->50|65->51|65->51|65->51|65->51|66->52|66->52|66->52|69->55|70->56|77->63
                   -- GENERATED --
               */
           
