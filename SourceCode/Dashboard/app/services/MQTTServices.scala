@@ -1,32 +1,33 @@
 package services
 
-import models.{PayloadItem, TSData, data}
+import models.PayloadItem
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
 import org.eclipse.paho.client.mqttv3.{IMqttDeliveryToken, MqttCallback, MqttClient, MqttMessage}
 
 import javax.inject.{Inject, Singleton}
-import scala.collection.mutable
 import scala.util.{Failure, Success, Try}
 
 /**
- * Subsribe services
+ * MQTT Services
+ * This class supports all functions of MQTT protocol, which is developed base on MQTT Paho Client Library
+ * Including: Subscribe/Publish/Connect
  */
 object BrokerInfo{
-//  val url = "broker.mqttdashboard.com"
   val url = "127.0.0.1"
   val port = 1883
 }
 @Singleton
 class MQTTServices @Inject() (clientID: String) {
 
+  //setting up to connect to Broker
   val brokerUrl = s"tcp://${BrokerInfo.url}:${BrokerInfo.port}"
   val persistence = new MemoryPersistence
-//  val clientID = MqttClient.generateClientId()
   val client = new MqttClient(brokerUrl, clientID, persistence)
   var payloadsList: List[PayloadItem] = List()
 
+  //subscribe function
   def subscribe(topic: String, qos: Int ): Unit = {
-
+    //check if the device already connected to broker
     if (!client.isConnected()){
       client.connect()
       println(s"$clientID connecting to $brokerUrl ...")
@@ -54,16 +55,17 @@ class MQTTServices @Inject() (clientID: String) {
   }
 
   def getUpdate: List[PayloadItem] = {
-    payloadsList.foreach(i => {
+    /*payloadsList.foreach(i => {
       println(i.clientID)
       println(i.topic)
       println(i.payload)
-    })
+    })*/
     payloadsList
   }
 
-  def publish(topic: String, message: String): Boolean = {
-
+  //publish function
+  def publish(topic: String, message: String, retain_flag: Boolean, qos: Int): Boolean = {
+    //check if the device already connected to broker
     if (!client.isConnected()) {
       client.connect()
       println(s"CONNECT | $clientID | connect to broker: $brokerUrl ...")
@@ -72,6 +74,9 @@ class MQTTServices @Inject() (clientID: String) {
     val result = Try(client.getTopic(topic)) match {
       case Success(messageTopic) =>
         val mqttMessage = new MqttMessage(message.getBytes("utf-8"))
+        mqttMessage.setRetained(retain_flag)
+        mqttMessage.setQos(qos)
+
         Try(messageTopic.publish(mqttMessage)) match {
           case Success(r) =>
             println(s"PUBLISH | $clientID | sent message: ${r.getMessage}")

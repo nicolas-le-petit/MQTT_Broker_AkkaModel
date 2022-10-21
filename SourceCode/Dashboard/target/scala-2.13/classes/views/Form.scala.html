@@ -27,13 +27,20 @@
                                 <input type="text" name="pubPayload" id="pubPayload" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="retain">Retained Flag</label>
-                                <input type="checkbox" id="retain_flag" name="retain_flag" value=true>
+@*                                <label for="retain">Retained Flag</label>*@
+                                <div>
+                                    <label for="">Retained Flag</label>
+                                    <select name="retain_flag" id="retain_flag">
+                                        <option value="false">False</option>
+                                        <option value="true">True</option>
+                                    </select>
+                                </div>
+@*                                <input type="checkbox" id="retain_flag" name="retain_flag" value="true">*@
                             </div>
 
                             <div>
                                 <label for="">QoS</label>
-                                <select name="qos" id="qos">
+                                <select name="pubQos" id="pubQos">
                                     <option value=0>0</option>
                                     <option value=1>1</option>
                                     <option value=2>2</option>
@@ -50,7 +57,6 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-@*                        <div class="card-header">SUBSCRIBE FORM</div>*@
                         <div class="card bg-dark text-white">
                             <div class="card-header">SUBSCRIBE FORM</div>
                         </div><br>
@@ -61,7 +67,7 @@
                             </div>
                             <div>
                                 <label for="">QoS</label>
-                                <select name="qos" id="qos">
+                                <select name="subQos" id="subQos">
                                     <option value=0>0</option>
                                     <option value=1>1</option>
                                     <option value=2>2</option>
@@ -75,6 +81,13 @@
                         <h4>Data response:</h4>
                         <div id="result" class="table-responsive">
                             <table class="table table-hover table-borded">
+                                <thead class="bg-primary">
+                                    <tr class="text-white">
+                                        <th>Topic</th>
+                                        <th>Payload</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                 </tbody>
                             </table>
@@ -85,25 +98,32 @@
             <script>
                 $('#publishForm').submit(function(e){
                     e.preventDefault();
+                    toastr.warning('Publish ...');
                     console.log('publishForm');
                     $.ajax({
                         type: "POST",
                         url: $(this).attr('action'),
                         data: $(this).serialize(),
                         success: function (response) {
-                            console.log(response);
+                            toastr.success('Publish Success');
+                            //console.log(response)
+                            $('#pubTopic').val('');
+                            $('#pubPayload').val('');
                         }
                     });
                 });
                 $('#subscribeForm').submit(function(e){
                     e.preventDefault();
+                    toastr.warning('Subscribe ...');
                     console.log('subscribeForm');
                     $.ajax({
                         type: "POST",
                         url: $(this).attr('action'),
                         data: $(this).serialize(),
                         success: function (response) {
-                            console.log(response);
+                            toastr.success('Subscribe Success');
+                            //console.log(response);
+                            $('#subTopic').val('');
                         }
                     });
                 });
@@ -116,10 +136,12 @@
                             },
                             dataType: "text",
                             success: function (response) {
-                                console.log(response);
+                                let resArr = response.split("\n");
                                 $("#result").find('tbody').append(`
                                     <tr>
-                                        <td>${response}</td>
+                                        <td>${resArr[0] != undefined ? resArr[0] : ''}</td>
+                                        <td>${resArr[1] != undefined ? resArr[1] : ''}</td>
+                                        <td>${resArr[2] != undefined ? resArr[2] : ''}</td>
                                     </tr>
                                 `);
                             }

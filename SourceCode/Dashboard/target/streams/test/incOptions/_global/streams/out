@@ -1,2 +1,8 @@
-[debug] Created transactional ClassFileManager with tempDir = E:\6.Project\Scala\Template\target\scala-2.13\test-classes.bak
-[debug] Removing the temporary directory used for backing up class files: E:\6.Project\Scala\Template\target\scala-2.13\test-classes.bak
+[debug] Created transactional ClassFileManager with tempDir = E:\Thesis\MQTT_Broker_AkkaModel\SourceCode\Dashboard\target\scala-2.13\test-classes.bak
+[debug] About to delete class files:
+[debug] 	IntergrationTest.class
+[debug] We backup class files:
+[debug] 	IntergrationTest.class
+[debug] Registering generated classes:
+[debug] 	IntergrationTest.class
+[debug] Removing the temporary directory used for backing up class files: E:\Thesis\MQTT_Broker_AkkaModel\SourceCode\Dashboard\target\scala-2.13\test-classes.bak

@@ -16,7 +16,7 @@ class BrowserSpec extends PlaySpec
 
       go to ("http://localhost:" + port)
 
-      pageSource must include ("Your new application is ready.")
+      pageSource must include ("MQTT DASH BOARD")
     }
   }
 }

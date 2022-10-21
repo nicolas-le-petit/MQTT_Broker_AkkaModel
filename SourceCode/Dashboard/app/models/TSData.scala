@@ -17,28 +17,19 @@ class Devices(tag: Tag) extends Table[Device](tag, "devices") {
   def description = column[String]("description")
   def device_code = column[String]("device_code", O.PrimaryKey)
   def * = (id.?, name, device_code, description) <> (Device.tupled, Device.unapply)
-  // Every table needs a * projection with the same type as the table's type parameter
-//  def * = (id.?, name, device_code, description)
 }
 
-class Topics(tag: Tag) extends Table[(String, String)](tag, "topics") {
-  def name = column[String]("name")
-  def device_code = column[String]("device_code", O.PrimaryKey)
-  // Every table needs a * projection with the same type as the table's type parameter
-  def * = (name, device_code)
-}
-
-class Payloads(tag: Tag) extends Table[(String, Int, Int, String)](tag, "payloads") {
-  //  def id = column[Int]("id", O.PrimaryKey, O.AutoInc) // This is the primary key column
-  def msg = column[String]("name")
-  def topicID = column[Int]("device_code", O.PrimaryKey)
-  def created = column[Int]("created")
-  def device_code = column[String]("device_code")
-
-  // Every table needs a * projection with the same type as the table's type parameter
-  def * = (msg, topicID, created, device_code)
-}
-
+//case class Payload(id: Option[Int], msg: String, topic: String, time: Int, device_code: String)
+//class Payload(tag: Tag) extends Table[Device](tag, "payloads") {
+//  def id = column[Int]("id", O.PrimaryKey, O.AutoInc) // This is the primary key column
+//  def msg = column[String]("msg")
+//  def topic = column[String]("topic")
+//  def time = column[Int]("time")
+//  def device_code = column[String]("device_code", O.PrimaryKey)
+//  def * = (id.?, msg, topic, time, device_code) <> (Payload.tupled, Payload.unapply)
+//  // Every table needs a * projection with the same type as the table's type parameter
+//  //  def * = (id.?, name, device_code, description)
+//}
 class DeviceItem(val _id: Option[Int], val _name: String, val _code: String, val _des: String) {
   var id: Option[Int] = _id
   var name: String = _name
@@ -54,11 +45,7 @@ class PayloadItem(val _clientID: String, val _topic: String, val _payload: Strin
 case class data(clientID: String, topic: String, payload: String)
 object TSData{
   val devicesTable = TableQuery[Devices]
-  val topicsTable = TableQuery[Topics]
-  val payloadsTable = TableQuery[Payloads]
-
   val db = Database.forConfig("dbSqlite.db")
-
   var sessions = mutable.Map[String, MQTTServices]()
 
   def createSession(device_code: String): Boolean = {
@@ -71,7 +58,7 @@ object TSData{
     }
   }
 
-  //for database
+  //for device management
   def addItem(device_name: String, device_code: String, device_description: String): Unit = {
     val query = db.run(devicesTable.filter(i => i.device_code === device_code || i.name === device_name).exists.result)
     val check = Await.result(query, 5 seconds).asInstanceOf[Boolean]

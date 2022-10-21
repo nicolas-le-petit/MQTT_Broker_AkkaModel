@@ -15,9 +15,6 @@ import scala.language.postfixOps
 @Singleton
 class HomeController @Inject()(cc: ControllerComponents)(implicit assetsFinder: AssetsFinder)
   extends AbstractController(cc) {
-
-  val server = "broker.mqttdashboard.com"
-  val port = 1883
   /**
    * Create an Action to render an HTML page with a welcome message.
    * The configuration in the `routes` file means that this method
@@ -27,7 +24,7 @@ class HomeController @Inject()(cc: ControllerComponents)(implicit assetsFinder: 
 
   def loadForm(device_code: String) = Action {
     TSData.createSession(device_code)
-    Ok(views.html.Form("ok form", device_code))
+    Ok(views.html.Form("Load form PubSub successfully!", device_code))
   }
   //Home
   def index = Action {
@@ -46,8 +43,17 @@ class HomeController @Inject()(cc: ControllerComponents)(implicit assetsFinder: 
       val clientID = args("PubClientID").head
       val topic = args("pubTopic").head
       val payload = args("pubPayload").head
-      TSData.sessions(clientID).publish(topic, payload)
-      Ok(views.html.Form(("ok form"), clientID))
+      val _retain = args("retain_flag").head
+      var retain = false
+      if (_retain == "true"){
+        retain = true
+      }
+      else {
+        retain = false
+      }
+      val qos = args("pubQos").head.toInt
+      TSData.sessions(clientID).publish(topic, payload, retain, qos)
+      Ok(views.html.Form(("MQTT publish successfully!"), clientID))
     }.getOrElse(Ok("Opps!"))
   }
 
@@ -57,9 +63,9 @@ class HomeController @Inject()(cc: ControllerComponents)(implicit assetsFinder: 
     postVal.map { args =>
       val topic = args("subTopic").head
       val device_code = args("SubClientID").head
-      val qos = args("qos").head.toInt
+      val qos = args("subQos").head.toInt
       TSData.sessions(device_code).subscribe(topic, qos)
-      Ok(views.html.Form("OK", device_code))
+      Ok(views.html.Form("MQTT subscribe successfully!", device_code))
     }.getOrElse(Ok("Opps!"))
   }
 
@@ -91,7 +97,7 @@ class HomeController @Inject()(cc: ControllerComponents)(implicit assetsFinder: 
 
   def listAllDevice  = Action { implicit request: Request[AnyContent] =>
     val devicesList = TSData.getDeviceList()
-    Ok(views.html.index("OK", devicesList))
+    Ok(views.html.index("List all device successfully!", devicesList))
   }
 
   def deleteDevice(device_code: String) = Action { implicit request: Request[AnyContent] =>

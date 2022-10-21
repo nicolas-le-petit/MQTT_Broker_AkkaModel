@@ -1,7 +1,2 @@
-[error] E:\Thesis\MQTT_Broker_AkkaModel\SourceCode\Dashboard\conf\routes:34:1: value loadForm2 is not a member of controllers.HomeController
-[error] did you mean loadForm?
-[error] GET     /form2/:device_code          controllers.HomeController.loadForm2(device_code)
-[error] E:\Thesis\MQTT_Broker_AkkaModel\SourceCode\Dashboard\conf\routes:37:1: value loadForm1 is not a member of controllers.HomeController
-[error] did you mean loadForm?
-[error] GET     /form1/:device_code          controllers.HomeController.loadForm1(device_code)
-[error] two errors found
+[debug] Acquiring lock on file E:\Thesis\MQTT_Broker_AkkaModel\SourceCode\Dashboard\project\target\.sbt-compilation-infos\root-compile\.sbt-idea-lock ...
+[debug] Releasing lock on file E:\Thesis\MQTT_Broker_AkkaModel\SourceCode\Dashboard\project\target\.sbt-compilation-infos\root-compile\.sbt-idea-lock.

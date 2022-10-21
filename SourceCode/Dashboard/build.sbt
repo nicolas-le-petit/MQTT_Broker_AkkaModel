@@ -16,7 +16,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       "com.h2database" % "h2" % "1.4.199",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test,
       //DungTT Added
       "com.typesafe.play" %% "play" % PlayVersion,
       "org.eclipse.paho" % "org.eclipse.paho.client.mqttv3" % Mqttv3Version,
@@ -28,7 +28,8 @@ lazy val root = (project in file("."))
       "com.typesafe.slick" %% "slick-hikaricp" % SlickVersion,
       "org.slf4j" % "slf4j-api" % "1.7.5",
       "org.xerial" % "sqlite-jdbc" % "3.31.1",
-      jdbc
+      jdbc,
+//      "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.0" % "test"
     ),
     scalacOptions ++= Seq(
       "-feature",
